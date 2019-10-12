@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    text-decoration: none;
+}
+
+body, button, a {
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: #FBFBFB;
+}
+
+/* Header */
+#app-header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: .8em 1em;
+    background-color: #313B41;
+    color: #fff;
+}
+
+#app-header-nav ul {
+    display: flex;
+    flex-direction: row;
+}
+
+#app-header-nav ul li {
+    padding: 0 .5em;
+}
+
+#app-header-nav ul li a {
+    color: #fff;
+}
+
+#app-header-nav ul li a:hover,
+.active-link {
+    font-weight: bold;
+}
+
+/* Forms */
+.form-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 25em;
+    border-radius: 25px;
+    background: #FBFBFB;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    padding-bottom: 2em;
+}
+
+.form-container h1 {
+    text-align: center;
+    margin-bottom: 1em;
+    padding-top: .5em;
+    padding-bottom: .5em;
+    background: #313B41;
+    border-radius: 24px 24px 0px 0px;
+    color: #fff;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    padding: .5em 2em;
+}
+
+.form-field input {
+    padding: .5em 1em;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid rgba(49, 59, 65, 0.5);
+}
+
+.form-field label {
+    padding-left: 1em;
+    font-size: .9em;
+}
+
+.form-container button {
+    display: block;
+    width: 85%;
+    margin: 2em auto;
+    padding: .8em 1em;
+    outline: none;
+    border: none;
+    background-color: #2B876F;
+    border-radius: 50px;
+    color: #fff;
+    font-size: 1em;
+}
+
+.form-container span {
+    padding: 0 2.5em;
+    font-size: .8em;
+}
+
+.form-container a {
+    color: #2B876F;
+}

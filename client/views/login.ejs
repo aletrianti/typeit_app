@@ -1,0 +1,23 @@
+<% include ./partials/header %>
+
+<div class="form-container">
+    <h1>Login</h1>
+
+    <form action="/login">
+        <div class="form-field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email">
+        </div>
+
+        <div class="form-field">
+            <label for="password">Password</label>
+            <input type="text" name="password" id="password">
+        </div>
+    </form>
+
+    <button type="submit">Login</button>
+
+    <span>Don't have an account? You can register <a href="/register">here</a>.</span>
+</div>
+
+<% include ./partials/footer %>

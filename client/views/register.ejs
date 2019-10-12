@@ -1,0 +1,38 @@
+<% include ./partials/header %>
+
+<div class="form-container">
+    <h1>Register</h1>
+
+    <form action="/register">
+        <div class="form-field">
+            <label for="first-name">First name</label>
+            <input type="text" name="first-name" id="first-name">
+        </div>
+
+        <div class="form-field">
+            <label for="last-name">Last name</label>
+            <input type="text" name="last-name" id="last-name">
+        </div>
+
+        <div class="form-field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email">
+        </div>
+
+        <div class="form-field">
+            <label for="password">Password</label>
+            <input type="text" name="password" id="password">
+        </div>
+
+        <div class="form-field">
+            <label for="confirm-password">Confirm password</label>
+            <input type="text" name="confirm-password" id="confirm-password">
+        </div>
+    </form>
+
+    <button type="submit">Register</button>
+
+    <span>Already registered? You can login <a href="/login">here</a>.</span>
+</div>
+
+<% include ./partials/footer %>
