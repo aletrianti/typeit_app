@@ -13,6 +13,23 @@ body, button, a {
 
 body {
     background-color: #FBFBFB;
+    overflow: hidden;
+}
+
+#bg-small-leaf, 
+#bg-big-leaf {
+    z-index: -1;
+    position: absolute;
+}
+
+#bg-small-leaf {
+    top: 3em;
+    left: -10em;
+}
+
+#bg-big-leaf {
+    top: 20em;
+    right: -20em;
 }
 
 /* Header */
@@ -22,9 +39,11 @@ body {
     flex-wrap: row wrap;
     justify-content: space-between;
     align-items: center;
-    padding: .8em 1em;
+    padding: .8em 1.5em;
     background-color: #313B41;
     color: #fff;
+    font-size: .9em;
+    z-index: 1;
 }
 
 #app-header-nav ul {
@@ -106,4 +125,5 @@ body {
 
 .form-container a {
     color: #2B876F;
+    text-decoration: underline;
 }
