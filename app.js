@@ -7,6 +7,11 @@ const passportLocalMongoose = require('passport-local-mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
 
+// Use body-parser - this is used to parse request bodies
+app.use(bodyParser.urlencoded({ extended: true }));
+// Init Middleware
+app.use(express.json({ extended: false }));
+
 // Require routes
 const authRoutes = require('./routes/index');
 const dashboardRoutes = require('./routes/dashboard');
@@ -20,12 +25,12 @@ const db = require('./config/dbKeys').mongoURI;
 
 // Connect to DB
 mongoose
-    .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })       // Connects to the database with the key specified in config/dbKeys.js
-    .then(() => console.log('Connected to db'))                             // Connects and shows "Connected to db" in the console
-    .catch(err => console.log(err));                                        // If there is an error, it gets displayed in the console
-
-// Use body-parser - this is used to parse request bodies
-app.use(bodyParser.urlencoded({extended: true}));
+    // Connects to the database with the key specified in config/dbKeys.js
+    .connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+    // Connects and shows "Connected to db" in the console
+    .then(() => console.log('Connected to db'))
+    // If there is an error, it gets displayed in the console
+    .catch(err => console.log(err));
 
 // View engine setup
 app.set('views', path.join(__dirname, 'client/views'));
