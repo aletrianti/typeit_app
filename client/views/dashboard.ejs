@@ -1,5 +1,20 @@
-<% include ./partials/header %>
+<% include ./components/header %>
 
-<h1>Dashboard</h1>
+<div id="app-dashboard">
+    <% include ./components/linksSidebar %>
+    <% include ./components/notesSidebar %>
 
-<% include ./partials/footer %>
+    <div id="new-category-form" class="hidden-category-form">
+        <span id="hide-category-form" onClick="hideCategoryForm()">x</span>
+        <form action="/categories">
+            <input type="text" id="new-category-input" placeholder="New category...">
+        </form>
+        <button type="submit" id="new-category-btn">Create</button>
+    </div>
+
+    <div id="app-dashboard-container">
+        
+    </div>
+</div>
+
+<% include ./components/footer %>
