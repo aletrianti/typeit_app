@@ -1,3 +1,4 @@
 /node_modules
 /config/devDBKeysConfig.js
 /config/prodDBKeysConfig.js
+/config/config.js

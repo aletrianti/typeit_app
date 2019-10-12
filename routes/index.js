@@ -3,7 +3,9 @@ const router = express.Router();
 const passport = require("passport");
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const jwtSecret = require("../config/config").jwtSecret;
 
 // GET request 
 // Render the index page
@@ -91,9 +93,20 @@ router.post('/register', [
         newUser.password = await bcrypt.hash(password, salt);
         await newUser.save();
 
-        return res.send('Wuhu!');
-
         // Return a token (using jsonwebtoken)
+        const payload = {
+            user: {
+                id: newUser.id // Although MongoDB uses an underscore before "id" ("_id"), the "id" can be written without the underscore when using mongoose (abstraction)
+            }
+        };
+
+        jwt.sign(payload, jwtSecret, { expiresIn: 360000 }, (err, token) => {
+            if (err) {
+                return res.status(500).json(err);
+            }
+
+            res.json({ token });
+        });
     } catch(err) {
         return res.status(500).send('Server error.');
     }
