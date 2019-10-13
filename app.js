@@ -1,30 +1,19 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const flash = require('connect-flash');
+// const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const path = require('path');
 const User = require("./models/User");
 const passportSecret = require("./config/config").passportSecret;
 
-// Use flash to display messages and store information in the current session
-app.use(flash());
-
-// Use body-parser - this is used to parse request bodies
-app.use(bodyParser.urlencoded({ extended: true }));
+// This is used to parse request bodies
+app.use(express.urlencoded({ extended: true }));
 // Init Middleware
 app.use(express.json({ extended: false }));
-
-// Require routes
-const authRoutes = require('./routes/index');
-const dashboardRoutes = require('./routes/dashboard');
-
-// Use required routes
-app.use('/', authRoutes);
-app.use('/dashboard', dashboardRoutes);
 
 // Passport Config
 require('./config/passport')(passport);
@@ -47,6 +36,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+// Initialize a session with passport
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -57,13 +47,13 @@ app.set("view engine", "ejs");
 // Set the "client" folder as the static folder
 app.use(express.static('client'));
 
-// Global variables
-app.use(function(req, res, next) {
-    res.locals.success = req.flash('success');
-    res.locals.error = req.flash('error');
-    res.locals.flashError = req.flash('flashError');
-    next();
-});
+// Require routes
+const authRoutes = require('./routes/index');
+const dashboardRoutes = require('./routes/dashboard');
+
+// Use required routes
+app.use('/', authRoutes);
+app.use('/dashboard', dashboardRoutes);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {
