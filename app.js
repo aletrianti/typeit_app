@@ -1,11 +1,17 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const flash = require('connect-flash');
+const session = require('express-session');
 const passport = require('passport');
-const passportLocal = require('passport-local');
-const passportLocalMongoose = require('passport-local-mongoose');
+const LocalStrategy = require('passport-local');
 const bodyParser = require('body-parser');
 const path = require('path');
+const User = require("./models/User");
+const passportSecret = require("./config/config").passportSecret;
+
+// Use flash to display messages and store information in the current session
+app.use(flash());
 
 // Use body-parser - this is used to parse request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,6 +26,9 @@ const dashboardRoutes = require('./routes/dashboard');
 app.use('/', authRoutes);
 app.use('/dashboard', dashboardRoutes);
 
+// Passport Config
+require('./config/passport')(passport);
+
 // Require secret keys
 const db = require('./config/dbKeys').mongoURI;
 
@@ -32,12 +41,29 @@ mongoose
     // If there is an error, it gets displayed in the console
     .catch(err => console.log(err));
 
+// Passport config
+app.use(session({
+    secret: passportSecret,
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 // View engine setup
 app.set('views', path.join(__dirname, 'client/views'));
 // Recognise every page rendered as an ejs page
 app.set("view engine", "ejs");
 // Set the "client" folder as the static folder
 app.use(express.static('client'));
+
+// Global variables
+app.use(function(req, res, next) {
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error');
+    res.locals.flashError = req.flash('flashError');
+    next();
+});
 
 // Serve static assets in production
 if (process.env.NODE_ENV === 'production') {

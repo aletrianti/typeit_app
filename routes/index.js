@@ -3,20 +3,12 @@ const router = express.Router();
 const passport = require("passport");
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const User = require("../models/User");
-const jwtSecret = require("../config/config").jwtSecret;
 
 // GET request 
 // Render the index page
 router.get('/', (req, res) => {
     res.render('index');
-});
-
-// GET request 
-// Render the login page
-router.get('/login', (req, res) => {
-    res.render('login');
 });
 
 // GET request 
@@ -54,7 +46,7 @@ router.post('/register', [
 
     // confirmPassword must be equal to password
     check('confirmPassword', 'The passwords do not match.').custom((value, { req }) => value === req.body.password)
-], async (req, res) => {
+], (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -68,48 +60,57 @@ router.post('/register', [
         password
     } = req.body;
 
-    try {
-        // Check if the user already exists
-        const user = await User.findOne({ email });
-
-        if (user) {
-            // errors.array() (line 58) returns an array of objects. The message can be extracted from "msg"
-            // In order to display all the errors in the same way in the UI, a message for this specific error is defined manually
-            return res.status(400).json({ errors: [ { msg: 'This email has already been used.' } ] });
-        }
-
-        // Create a new user
-        const newUser = new User({
-            firstName,
-            lastName,
-            email,
-            password
-        });
-
-        // Encrypt the password
-        // First create the salt, then the hash with the string password and the salt as parameters
-        // The hash will be saved as the user's password in the database
-        const salt = await bcrypt.genSalt(10);
-        newUser.password = await bcrypt.hash(password, salt);
-        await newUser.save();
-
-        // Return a token (using jsonwebtoken)
-        const payload = {
-            user: {
-                id: newUser.id // Although MongoDB uses an underscore before "id" ("_id"), the "id" can be written without the underscore when using mongoose (abstraction)
+    // Check if the user already exists
+    User.findOne({ email: email })
+        .then(user => {
+            if (user) {
+                // errors.array() returns an array of objects. The message can be extracted from "msg"
+                // In order to display all the errors in the same way in the UI, a message for this specific error is defined manually
+                return res.status(400).json({ errors: [ { msg: 'This email has already been used.' } ] });
             }
-        };
-
-        jwt.sign(payload, jwtSecret, { expiresIn: 360000 }, (err, token) => {
-            if (err) {
-                return res.status(500).json(err);
-            }
-
-            res.json({ token });
+        
+            // Create a new user
+            const newUser = new User({
+                firstName,
+                lastName,
+                email,
+                password
+            });
+        
+            // Encrypt the password
+            // First create the salt, then the hash
+            // The hash will be saved as the user's password in the database
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(newUser.password, salt, (err, hash) => {
+                    if (err) {
+                        return res.status(400).json({ errors: [ { msg: err } ] });;
+                    }
+                    newUser.password = hash;
+                    newUser.save()
+                    .then(user => {
+                        req.flash('success', 'You are now registered!');
+                        res.redirect('/dashboard');
+                    })
+                    .catch(err => console.log(err));
+                });
+            });
         });
-    } catch(err) {
-        return res.status(500).send('Server error.');
-    }
+});
+
+// GET request 
+// Render the login page
+router.get('/login', (req, res) => {
+    res.render('login');
+});
+
+// POST request
+// Login 
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/dashboard',
+        failureRedirect: '/login',
+        failureFlash: true
+    })(req, res, next);
 });
 
 module.exports = router;

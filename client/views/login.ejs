@@ -3,7 +3,7 @@
 <div class="form-container">
     <h1>Login</h1>
 
-    <form action="/login">
+    <form action="/login" method="post">
         <div class="form-field">
             <label for="email">Email</label>
             <input type="text" name="email" id="email">
@@ -13,9 +13,9 @@
             <label for="password">Password</label>
             <input type="password" name="password" id="password">
         </div>
-    </form>
 
-    <button type="submit">Login</button>
+        <button id="login-btn">Login</button>
+    </form>
 
     <span>Don't have an account? You can register <a href="/register">here</a>.</span>
 </div>

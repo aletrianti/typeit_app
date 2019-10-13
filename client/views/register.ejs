@@ -3,7 +3,7 @@
 <div class="form-container">
     <h1>Register</h1>
 
-    <form action="/register">
+    <form action="/register" method="post">
         <div class="form-field">
             <label for="firstName">First name</label>
             <input type="text" name="firstName" id="first-name">
@@ -28,9 +28,9 @@
             <label for="confirmPassword">Confirm password</label>
             <input type="password" name="confirmPassword" id="confirm-password">
         </div>
-    </form>
 
-    <button type="submit">Register</button>
+        <button id="register-btn">Register</button>
+    </form>
 
     <span>Already registered? You can login <a href="/login">here</a>.</span>
 </div>
