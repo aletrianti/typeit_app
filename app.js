@@ -1,22 +1,20 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-// const flash = require('connect-flash');
-const session = require('express-session');
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
-// const bodyParser = require('body-parser');
 const path = require('path');
 const User = require("./models/User");
-const passportSecret = require("./config/config").passportSecret;
+
+// View engine setup
+app.set('views', path.join(__dirname, 'client/views'));
+// Set ejs as the template engine, so that each page can be rendered correctly
+app.set('view engine', 'ejs');
+// Set the "client" folder as the static folder
+app.use(express.static('client'));
 
 // This is used to parse request bodies
 app.use(express.urlencoded({ extended: true }));
-// Init Middleware
+// This is used to send json-based requests
 app.use(express.json({ extended: false }));
-
-// Passport Config
-require('./config/passport')(passport);
 
 // Require secret keys
 const db = require('./config/dbKeys').mongoURI;
@@ -30,25 +28,8 @@ mongoose
     // If there is an error, it gets displayed in the console
     .catch(err => console.log(err));
 
-// Passport config
-app.use(session({
-    secret: passportSecret,
-    resave: false,
-    saveUninitialized: false
-}));
-// Initialize a session with passport
-app.use(passport.initialize());
-app.use(passport.session());
-
-// View engine setup
-app.set('views', path.join(__dirname, 'client/views'));
-// Recognise every page rendered as an ejs page
-app.set("view engine", "ejs");
-// Set the "client" folder as the static folder
-app.use(express.static('client'));
-
 // Require routes
-const authRoutes = require('./routes/index');
+const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard');
 
 // Use required routes
