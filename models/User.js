@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const passportLocalMongoose = require("passport-local-mongoose");
 
 // Create a User schema using mongoose
 // This schema is going to define the 'user' collection in the database

@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const passport = require("passport");
 
 // Adding this middleware inside of requests used to render routes will make the routes protected
 const isLoggedIn = require("../middleware/isLoggedIn");
