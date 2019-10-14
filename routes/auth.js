@@ -36,7 +36,7 @@ router.post('/register', async (req, res) => {
     const hash = await bcrypt.hash(req.body.password, salt);
 
     // Create a new user
-    // If there are no errors, save the user into the database and redirect the user to '/login'
+    // If there are no errors, save the user into the database, assign a token and render the dashboard
     // If there are errors, send the error
     try {
         const newUser = new User({
@@ -48,7 +48,12 @@ router.post('/register', async (req, res) => {
 
         newUser.save();
 
-        res.redirect('/login');
+        // The token is created by using the user id and a secret key
+        const token = jwt.sign({_id: newUser._id}, jwtSecret);
+        // Pass the newly created token to a header
+        res.header('Authorization', token);
+
+        res.render('dashboard');
     } catch(err) {
         res.status(400).send(err);
     }
@@ -81,7 +86,9 @@ router.post('/login', async (req, res, next) => {
     // The token is created by using the user id and a secret key
     const token = jwt.sign({_id: user._id}, jwtSecret);
     // Pass the newly created token to a header
-    res.header('Authorization', token).send(token);
+    res.header('Authorization', token);
+
+    res.render('dashboard');
 });
 
 module.exports = router;

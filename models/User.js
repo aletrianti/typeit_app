@@ -27,7 +27,5 @@ const UserSchema = new mongoose.Schema({
     }
 });
 
-UserSchema.plugin(passportLocalMongoose);
-
 // Export the schema so that it can be accessible through the User variable as a JavaScript model ('user')
 module.exports = User = mongoose.model('user', UserSchema);
