@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
+const passport = require("passport");
+const session = require("express-session");
+const sessionSecret = require("./config/config").sessionSecret;
 const User = require("./models/User");
 
 // View engine setup
@@ -16,6 +19,9 @@ app.use(express.urlencoded({ extended: true }));
 // This is used to send json-based requests
 app.use(express.json({ extended: false }));
 
+// Passport Config
+require('./config/passport')(passport);
+
 // Require secret keys
 const db = require('./config/dbKeys').mongoURI;
 
@@ -27,6 +33,19 @@ mongoose
     .then(() => console.log('Connected to db'))
     // If there is an error, it gets displayed in the console
     .catch(err => console.log(err));
+
+// Initialize sessions with some options, including a secret key
+app.use(session({
+    secret: sessionSecret,
+    resave: false,
+    saveUninitialized: false
+}));
+
+// Passport configuration
+// Initialize passport
+app.use(passport.initialize());
+// Initialize passport session
+app.use(passport.session());
 
 // Require routes
 const authRoutes = require('./routes/auth');
