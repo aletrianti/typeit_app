@@ -61,12 +61,23 @@ router.get('/login', (req, res) => {
 });
 
 // POST request
-// Login 
+// Login with passport for authentication with local strategy
+// If the authentication is successful: redirect to the dashboard
+// If something goes wrong, redirect to the login page
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', {
         successRedirect: '/dashboard',
         failureRedirect: '/login'
     })(req, res, next);
+});
+
+// GET request
+// Logout functionality
+// Use the logout method that comes with Express on the request
+// Redirect to the login page
+router.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/login');
 });
 
 module.exports = router;
