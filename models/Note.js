@@ -17,24 +17,15 @@ const NoteSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Category"
         },
-        name: { 
-            type: String,
-            ref: "Category"
-        }
+        name: { type: String }
     },
     author: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
-        firstName: { 
-            type: String,
-            ref: "User"
-        },
-        lastName: { 
-            type: String,
-            ref: "User" 
-        }
+        firstName: { type: String },
+        lastName: { type: String }
     },
     createdAt: {
         type: Date,

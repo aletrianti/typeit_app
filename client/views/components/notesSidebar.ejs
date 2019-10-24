@@ -1,13 +1,9 @@
 <div id="app-notes-sidebar">
-    <span class="sidebar-add-new-text" id="add-category" onClick="addNewCategory()">+ Add a new category</span>
+    <!-- TODO: Add a filter functionality -->
 
-    <!-- TODO: Make a category component -->
-    <div class="category">
-        <div class="category-name"><span contenteditable="true">Category name</span> (1)</div>
+    <span class="sidebar-add-new-text" id="add-note"onClick="addNewNote()">+ Add a new note</span>
 
-        <!-- TODO: Make a note component -->
-        <span class="note-prev"><b>Note name</b> - 12.10.2019</span>
-
-        <span class="sidebar-add-new-text sidebar-add-new-text_less-padding-top" id="add-note">+ Add a new note</span>
-    </div>
+    <% notes.forEach(function(note) { %>
+        <% include ./note %>
+    <% }); %>
 </div>

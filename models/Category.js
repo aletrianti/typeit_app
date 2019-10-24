@@ -11,6 +11,14 @@ const CategorySchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    author: {
+        authorId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        firstName: { type: String },
+        lastName: { type: String },
     }
 });
 
