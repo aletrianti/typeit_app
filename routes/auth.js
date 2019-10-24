@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+const passport = require("passport");
 const registerValidation = require("../validation/authValidation").registerValidation;
 const loginValidation = require("../validation/authValidation").loginValidation;
-const jwtSecret = require("../config/config").jwtSecret;
+const User = require("../models/User");
 
 // GET request 
 // Render the index page
@@ -36,8 +35,7 @@ router.post('/register', async (req, res) => {
     const hash = await bcrypt.hash(req.body.password, salt);
 
     // Create a new user
-    // If there are no errors, save the user into the database, assign a token and render the dashboard
-    // If there are errors, send the error
+    // If there are no errors: save the user into the database and redirect them to '/login'
     try {
         const newUser = new User({
             firstName: req.body.firstName,
@@ -48,14 +46,11 @@ router.post('/register', async (req, res) => {
 
         newUser.save();
 
-        // The token is created by using the user id and a secret key
-        const token = jwt.sign({_id: newUser._id}, jwtSecret);
-        // Pass the newly created token to a header
-        res.header('Authorization', token);
-
-        res.render('dashboard');
+        res.redirect('/login');
     } catch(err) {
+        // If there are errors: send a 400 status along with an error
         res.status(400).send(err);
+        res.render('register');
     }
 });
 
@@ -67,28 +62,11 @@ router.get('/login', (req, res) => {
 
 // POST request
 // Login 
-router.post('/login', async (req, res, next) => {
-    // Validate the body of the request and, if there are errors, send a 400 status with the error message
-    const validation = loginValidation.validate(req.body);
-    if (validation.error) return res.status(400).send({ error: validation.error.details[0].message });
-
-    // Get user based on the email
-    const user = await User.findOne({ email: req.body.email });
-
-    // Check if the email already exists and, if it does not, send a 400 status with an error message
-    if (!user) return res.status(400).send({ error: 'Invalid credentials' });
-
-    // Check if the password is correct and, if it is not correct, send a 400 status with an error message
-    const dbPassword = await bcrypt.compare(req.body.password, user.password);
-    if (!dbPassword) return res.status(400).send({ error: 'Invalid credentials' });
-
-    // Assign a token while logging in the user
-    // The token is created by using the user id and a secret key
-    const token = jwt.sign({_id: user._id}, jwtSecret);
-    // Pass the newly created token to a header
-    res.header('Authorization', token);
-
-    res.render('dashboard');
+router.post('/login', (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/dashboard',
+        failureRedirect: '/login'
+    })(req, res, next);
 });
 
 module.exports = router;
