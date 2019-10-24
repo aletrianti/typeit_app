@@ -16,10 +16,12 @@
             <span>Typeit</span>
             <nav id="app-header-nav">
                 <ul>
-                    <li><a href="/register">Register</a></li>
-                    <li><a href="/login">Login</a></li>
-
-                    <li><a href="#">User name</a></li> <!-- TODO: Make dynamic -->
+                    <% if(!loggedInUser) { %>
+                        <li><a href="/register">Register</a></li>
+                        <li><a href="/login">Login</a></li>
+                    <% } else { %>
+                        <li><a href="#"><%= loggedInUser.firstName + ' ' + loggedInUser.lastName %></a></li>
+                    <% } %>
                 </ul>
             </nav>
         </header>

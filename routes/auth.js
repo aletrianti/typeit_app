@@ -20,7 +20,7 @@ router.get('/register', (req, res) => {
 
 // POST request 
 // Register a new user to the '/register' route
-router.post('/register', async (req, res) => {
+router.post('/register', async (req, res, next) => {
     // Validate the body of the request and, if there are errors, send a 400 status with the error message
     const validation = registerValidation.validate(req.body);
     if (validation.error) return res.status(400).send({ error: validation.error.details[0].message });

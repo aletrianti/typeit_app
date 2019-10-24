@@ -47,6 +47,12 @@ app.use(passport.initialize());
 // Initialize passport session
 app.use(passport.session());
 
+// Local variables
+app.use((req, res, next) => {
+    res.locals.loggedInUser = req.user;
+    next();
+});
+
 // Require routes
 const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard');
