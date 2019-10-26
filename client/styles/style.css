@@ -144,9 +144,10 @@ body {
 #app-dashboard-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: calc(100vh - 41px);
-    /* width: calc(100vw - 220px); */
+    align-items: flex-start;
+    /* height: calc(100vh - 41px); */
+    padding: 30px;
+    flex: 1;
 }
 
 /* -- Dashboard: Sidebars -- */
@@ -303,3 +304,107 @@ body {
 .hidden-category-form {
     display: none;
 }
+
+/* -- Dashboard: Note Form -- */
+
+#app-dashboard-container-create-note {
+    /* display: flex;
+    flex-direction: column; */
+    width: 100%;
+    height: 100%;
+    background-color: #FBFBFB;
+    box-shadow: 4px 0px 50px rgba(0, 0, 0, 0.25);
+    border-radius: 25px;
+}
+
+.hidden-note-form {
+    display: none;
+}
+
+#app-dashboard-container-create-note_header {
+    padding: 2em 2em .5em 2em;
+}
+
+#app-dashboard-container-create-note_header_top {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#app-dashboard-container-create-note_header input {
+    padding: .5em;
+    border: none;
+    border-bottom: 1px solid #313B41;
+    width: 60%;
+    outline: none;
+    font-size: 1.3em;
+}
+
+#app-dashboard-container-create-note_buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#app-dashboard-container-create-note_buttons .app-dashboard-btns {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: .8em;
+    cursor: pointer;
+}
+
+#app-dashboard-container-create-note_buttons #save-note-btn {
+    background-color: #2B876F;
+    color: #FBFBFB;
+    border: 1px solid #2B876F;
+    margin-right: 10px;
+}
+
+#app-dashboard-container-create-note_buttons #cancel-note-btn {
+    border: 1px solid rgba(49, 59, 65, 0.5);
+}
+
+#app-dashboard-container-create-note_header_options {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1em 0;
+}
+
+#app-dashboard-container-create-note_header_date {
+    display: flex;
+    flex-direction: column;
+    font-size: .8em;
+    margin-right: 1em;
+    padding-right: 1em;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+#app-dashboard-container-create-note_header_category {
+    font-size: .8em;
+}
+
+#add-note {
+    margin-right: 1em;
+}
+
+#app-dashboard-container-create-note_textarea {
+    padding: 0 2em 2em 2em;
+    height: 80%;
+    align-self: stretch;
+    overflow-y: scroll;
+}
+
+#app-dashboard-container-create-note_textarea::-webkit-scrollbar {
+    display: none;
+}
+
+#app-dashboard-container-create-note_textarea textarea {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    resize: none;
+    border: none;
+}
+
