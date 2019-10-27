@@ -28,3 +28,9 @@ function hideCategoryForm() {
 
     newCategoryForm.classList.add("hidden-category-form");
 }
+
+function openNote() {
+    const editNoteForm = document.getElementById("app-dashboard-container-edit-note");
+
+    editNoteForm.classList.remove("hidden-note-form");
+}

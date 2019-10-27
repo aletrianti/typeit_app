@@ -1,3 +1,4 @@
-<span class="note-prev">
-    <b>note.title</b> - note.createdAt
-</span>
+<a class="note-prev" href="/dashboard/notes/<%= note._id %>">
+    <b><%= note.title %></b> <br>
+    <span><%= note.category.name %> - <%= moment(note.createdAt).calendar() %></span>
+</a>

@@ -1,0 +1,11 @@
+<div id="new-category-form" class="hidden-category-form">
+    <span id="hide-category-form">
+        <span>Create a new category</span>
+        <i class="fas fa-times" onClick="hideCategoryForm()"></i>
+    </span>
+    
+    <form action="/dashboard/categories" method="post">
+        <input type="text" id="new-category-input" placeholder="New category..." name="name">
+        <button id="new-category-btn">Create</button>
+    </form>
+</div>

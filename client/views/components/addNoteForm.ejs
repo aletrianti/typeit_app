@@ -1,0 +1,33 @@
+<form action="/dashboard/notes" method="post" id="app-dashboard-container-create-note" class="hidden-note-form">
+    <div id="app-dashboard-container-create-note_header">
+        <div id="app-dashboard-container-create-note_header_top">
+            <input type="text" name="title" id="note-title" placeholder="New note...">
+
+            <div id="app-dashboard-container-create-note_buttons">
+                <button id="save-note-btn" class="app-dashboard-btns">Save</button>
+                <span id="cancel-note-btn" class="app-dashboard-btns" onClick="hideNoteForm()">Cancel</span>
+            </div>
+        </div>
+
+        <div id="app-dashboard-container-create-note_header_options">
+            <!-- <div id="app-dashboard-container-create-note_header_date">
+                <span id="note-creation-date">Created on: DATE HERE</span>
+            </div> -->
+
+            <div id="app-dashboard-container-create-note_header_category">
+                <% if(categories !== []) { %>
+                    <select name="category" id="select-category">
+                        <option selected hidden disabled>Choose a category</option>
+                        <% categories.forEach(function(category) { %>
+                            <option value="<%= category._id %>"><%= category.name %></option>
+                        <% }); %>
+                    </select>
+                <% } %>          
+            </div>
+        </div>
+    </div>
+
+    <div id="app-dashboard-container-create-note_textarea">
+        <textarea name="body" id="note-body" placeholder="Write something here..."></textarea>
+    </div>
+</form>

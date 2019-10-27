@@ -38,6 +38,7 @@ router.post('/register', async (req, res, next) => {
     // If there are no errors: save the user into the database and redirect them to '/login'
     try {
         const newUser = new User({
+            username: req.body.email,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,

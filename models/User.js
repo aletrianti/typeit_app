@@ -5,6 +5,10 @@ const passportMongoose = require('passport-local-mongoose');
 // This schema is going to define the 'user' collection in the database
 // The 'user' collection includes 5 attributes, which contain from 2 to 3 records
 const UserSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true
+    },
     firstName: {
         type: String,
         required: true

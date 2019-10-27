@@ -7,7 +7,7 @@
     text-decoration: none;
 }
 
-body, button, a, input, textarea {
+body, button, a, input, textarea, select {
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -59,10 +59,10 @@ body {
     color: #fff;
 }
 
-#app-header-nav ul li a:hover,
+/* #app-header-nav ul li a:hover,
 .active-link {
     font-weight: bold;
-}
+} */
 
 /* Forms */
 .form-container {
@@ -202,11 +202,11 @@ body {
     margin-left: 15px;
 }
 
-#app-links-sidebar nav ul li a:hover,
+/* #app-links-sidebar nav ul li a:hover,
 #app-links-sidebar nav span a:hover,
 .active-sidebar-link {
     font-weight: bold;
-}
+} */
 
 #app-notes-sidebar {
     display: flex;
@@ -222,9 +222,14 @@ body {
     font-size: .8em;
     color: rgba(0, 0, 0, 0.5);
     cursor: pointer;
+    transition: all .2s ease;
 }
 
-.sidebar-add-new-text_less-padding-top {
+.sidebar-add-new-text:hover {
+    color: #000;
+}
+
+.less-padding {
     padding-top: 15px;
 }
 
@@ -252,6 +257,11 @@ body {
     padding: 15px 30px;
     cursor: pointer;
     transition: all .2s ease;
+    color: #000;
+}
+
+.note-prev span {
+    font-size: .7em;
 }
 
 .note-prev:hover {
@@ -259,6 +269,9 @@ body {
 }
 
 #new-category-form {
+    position: absolute;
+    top: 3em;
+    left: 50%;
     margin: 10px auto;
     background-color: #FBFBFB;
     border-radius: 10px;
@@ -307,7 +320,8 @@ body {
 
 /* -- Dashboard: Note Form -- */
 
-#app-dashboard-container-create-note {
+#app-dashboard-container-create-note,
+#app-dashboard-container-edit-note {
     /* display: flex;
     flex-direction: column; */
     width: 100%;
@@ -321,18 +335,21 @@ body {
     display: none;
 }
 
-#app-dashboard-container-create-note_header {
+#app-dashboard-container-create-note_header,
+#app-dashboard-container-edit-note_header {
     padding: 2em 2em .5em 2em;
 }
 
-#app-dashboard-container-create-note_header_top {
+#app-dashboard-container-create-note_header_top,
+#app-dashboard-container-edit-note_header_top {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
 }
 
-#app-dashboard-container-create-note_header input {
+#app-dashboard-container-create-note_header input,
+#app-dashboard-container-edit-note_header input {
     padding: .5em;
     border: none;
     border-bottom: 1px solid #313B41;
@@ -341,38 +358,46 @@ body {
     font-size: 1.3em;
 }
 
-#app-dashboard-container-create-note_buttons {
+#app-dashboard-container-create-note_buttons,
+#app-dashboard-container-edit-note_buttons {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-#app-dashboard-container-create-note_buttons .app-dashboard-btns {
+#app-dashboard-container-create-note_buttons .app-dashboard-btns,
+#app-dashboard-container-edit-note_buttons .app-dashboard-btns,
+#add-note-btn {
     padding: 5px 10px;
     border-radius: 5px;
     font-size: .8em;
     cursor: pointer;
+    color: #000;
 }
 
-#app-dashboard-container-create-note_buttons #save-note-btn {
+#app-dashboard-container-create-note_buttons #save-note-btn,
+#app-dashboard-container-edit-note_buttons #save-note-btn {
     background-color: #2B876F;
     color: #FBFBFB;
     border: 1px solid #2B876F;
     margin-right: 10px;
 }
 
-#app-dashboard-container-create-note_buttons #cancel-note-btn {
+#app-dashboard-container-create-note_buttons #cancel-note-btn,
+#app-dashboard-container-edit-note_buttons #cancel-note-btn {
     border: 1px solid rgba(49, 59, 65, 0.5);
 }
 
-#app-dashboard-container-create-note_header_options {
+#app-dashboard-container-create-note_header_options,
+#app-dashboard-container-edit-note_header_options {
     display: flex;
     flex-direction: row;
     align-items: center;
     padding: 1em 0;
 }
 
-#app-dashboard-container-create-note_header_date {
+#app-dashboard-container-create-note_header_date,
+#app-dashboard-container-edit-note_header_date {
     display: flex;
     flex-direction: column;
     font-size: .8em;
@@ -381,26 +406,46 @@ body {
     border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-#app-dashboard-container-create-note_header_category {
+#app-dashboard-container-create-note_header_category,
+#app-dashboard-container-edit-note_header_category {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
     font-size: .8em;
 }
 
-#add-note {
+#select-category {
     margin-right: 1em;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: .9em;
+    outline: none;
 }
 
-#app-dashboard-container-create-note_textarea {
+#add-note-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1em;
+    color: #FBFBFB;
+    background-color: rgba(49, 59, 65, 1);
+}
+
+#app-dashboard-container-create-note_textarea,
+#app-dashboard-container-edit-note_textarea {
     padding: 0 2em 2em 2em;
     height: 80%;
     align-self: stretch;
     overflow-y: scroll;
 }
 
-#app-dashboard-container-create-note_textarea::-webkit-scrollbar {
+#app-dashboard-container-create-note_textarea::-webkit-scrollbar,
+#app-dashboard-container-edit-note_textarea::-webkit-scrollbar {
     display: none;
 }
 
-#app-dashboard-container-create-note_textarea textarea {
+#app-dashboard-container-create-note_textarea textarea,
+#app-dashboard-container-edit-note_textarea textarea {
     width: 100%;
     height: 100%;
     outline: none;

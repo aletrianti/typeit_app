@@ -38,7 +38,8 @@ mongoose
 app.use(session({
     secret: sessionSecret,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    expires: new Date(Date.now() + 3600000)
 }));
 
 // Passport configuration

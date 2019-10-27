@@ -4,53 +4,10 @@
     <% include ./components/linksSidebar %>
     <% include ./components/notesSidebar %>
 
-    <!-- TODO: Create a component for this form -->
-    <div id="new-category-form" class="hidden-category-form">
-        <span id="hide-category-form">
-            <span>Add or create a new category</span>
-            <i class="fas fa-times" onClick="hideCategoryForm()"></i>
-        </span>
-
-        <!-- <select name="" id="">
-            <option value=""></option>
-        </select> -->
-        
-        <form action="/dashboard/categories" method="post">
-            <input type="text" id="new-category-input" placeholder="New category..." name="name">
-            <button id="new-category-btn">Create</button>
-        </form>
-    </div>
+    <% include ./components/categoryForm %>
 
     <div id="app-dashboard-container">
-        <form action="/dashboard/notes" method="post" id="app-dashboard-container-create-note" class="hidden-note-form">
-            <div id="app-dashboard-container-create-note_header">
-                <div id="app-dashboard-container-create-note_header_top">
-                    <input type="text" name="title" id="note-title" placeholder="New note...">
-
-                    <div id="app-dashboard-container-create-note_buttons">
-                        <button id="save-note-btn" class="app-dashboard-btns">Save</button>
-                        <span id="cancel-note-btn" class="app-dashboard-btns" onClick="hideNoteForm()">Cancel</span>
-                    </div>
-                </div>
-
-                <div id="app-dashboard-container-create-note_header_options">
-                    <!-- <div id="app-dashboard-container-create-note_header_date">
-                        <span id="note-creation-date">Created on: DATE HERE</span>
-                    </div> -->
-    
-                    <div id="app-dashboard-container-create-note_header_category">
-                        <span id="add-note" onClick="addNewCategory()">+ Add category</span>
-                        
-                            <span>CATEGORY HERE</span> <!-- Insert category here -->
-                        
-                    </div>
-                </div>
-            </div>
-
-            <div id="app-dashboard-container-create-note_textarea">
-                <textarea name="body" id="note-body" placeholder="Write something here..."></textarea>
-            </div>
-        </form>
+        <% include ./components/addNoteForm %>
     </div>
 </div>
 

@@ -13,7 +13,7 @@ const CategorySchema = new mongoose.Schema({
         default: Date.now
     },
     author: {
-        authorId: {
+        id: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         },
