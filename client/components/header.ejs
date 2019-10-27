@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Typeit App</title>
+        <link rel="stylesheet" href="/media/fontawesome/css/all.min.css">
+        <link rel="stylesheet" href="/styles/style.css">
+    </head>
+    <body>
+        <img src="../../media/smallleaf.svg" alt="small leaf" id="bg-small-leaf">
+        <img src="../../media/bigleaf.svg" alt="big leaf" id="bg-big-leaf">
+
+        <header id="app-header">
+            <span>Typeit</span>
+
+            <% if (loggedInUser) { %>
+                <nav id="app-header-nav_inner-links">
+                    <ul>
+                        <% if (pathname === '/dashboard') { %>
+                            <li class="active-link"><a href="/dashboard">Dashboard</a></li>
+                        <% } else { %>
+                           <li><a href="/dashboard">Dashboard</a></li>
+                        <% } %>
+                        
+                        <% if (pathname === '/dashboard/public') { %>
+                            <li class="active-link"><a href="/dashboard/public">Public</a></li>
+                        <% } else { %>
+                            <li><a href="/dashboard/public">Public</a></li>
+                        <% } %>
+                        
+                        <% if (pathname === '/calendar') { %>
+                            <li class="active-link"><a href="/calendar">Calendar</a></li>
+                        <% } else { %>
+                            <li><a href="/calendar">Calendar</a></li>
+                        <% } %>
+                    </ul>
+                </nav>
+            <% } %>
+
+            <nav id="app-header-nav">
+                <ul>
+                    <% if (!loggedInUser) { %>
+                        <li><a href="/register">Register</a></li>
+                        <li><a href="/login">Login</a></li>
+                    <% } else { %>
+                        <li><a href="#"><%= loggedInUser.firstName + ' ' + loggedInUser.lastName %></a></li>
+                        <li><a href='/logout'>Logout</a></li>
+                    <% } %>
+                </ul>
+            </nav>
+        </header>
+        <div id="app-main-container">
+            

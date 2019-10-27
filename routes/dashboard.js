@@ -18,9 +18,9 @@ router.get('/', isLoggedIn, async (req, res) => {
     // If everything is find, show the notes
     Note.find({ 'author.id': req.user._id }, function(error, notes) {
         if (error) {
-            res.render('dashboard', { moment: moment, notes: [], categories: [] });
+            res.render('dashboard', { moment: moment, notes: [], categories: [], pathname: '/dashboard' });
         } else {
-            res.render('dashboard', { moment: moment, notes: notes, categories: categories }); 
+            res.render('dashboard', { moment: moment, notes: notes, categories: categories, pathname: '/dashboard' }); 
             // "moment" is included in order to format dates on the client side
         }
     });
@@ -69,9 +69,9 @@ router.get('/notes/:id', isLoggedIn, async (req, res) => {
     // If everything is find, show the note
     Note.findById(req.params.id, function(error, note) {
         if (error) {
-            res.render('dashboard/notes', { moment: moment, note: note, notes: [], categories: [] });
+            res.render('dashboard/notes', { moment: moment, note: note, notes: [], categories: [], pathname: '/dashboard' });
         } else {
-            res.render('dashboard/notes', { moment: moment, note: note, notes: notes, categories: categories }); 
+            res.render('dashboard/notes', { moment: moment, note: note, notes: notes, categories: categories, pathname: '/dashboard' }); 
             // "moment" is included in order to format dates on the client side
         }
     });
@@ -113,8 +113,13 @@ router.post('/notes', isLoggedIn, async (req, res) => {
 });
 
 // POST request
-// Edit a note
-router.post('/notes/:id', isLoggedIn, (req, res) => {
+// Edit a specific note
+router.post('/notes/:id', isLoggedIn, async (req, res) => {
+    // Select category name based on the category chosen in the select field
+    const categoryName = await Category.find({ _id: req.body.category }, { 'name': 1, '_id': 0 })
+        .then((name) => { return name[0].name; })
+        .catch((err) => { if (err) throw err; });
+
 
 });
 
