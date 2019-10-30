@@ -1,4 +1,4 @@
-<form action="/dashboard/notes" method="post" id="app-dashboard-container-create-note" class="hidden-note-form">
+<form action="/dashboard/notes" method="post" id="app-dashboard-container-create-note">
     <div id="app-dashboard-container-create-note_header_top">
         <div id="app-dashboard-container-create-note_buttons">
             <button id="save-note-btn" class="app-dashboard-btns">Save</button>
@@ -23,7 +23,10 @@
                             <option value="<%= category._id %>"><%= category.name %></option>
                         <% }); %>
                     </select>
-                <% } %>          
+                <% } %>      
+                <span id="add-category-btn" onClick="addNewCategory()">
+                    <i class="fa fa-plus"></i>
+                </span>    
             </div>
         </div>
     </div>

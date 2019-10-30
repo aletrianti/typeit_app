@@ -26,6 +26,25 @@ router.get('/', isLoggedIn, async (req, res) => {
     });
 });
 
+// GET request 
+// Render the dashboard with the "add note" form
+router.get('/new-note', isLoggedIn, async (req, res) => {
+    // Find categories created by the user making the request
+    const categories = await Category.find({ 'author.id': req.user._id });
+
+    // Find notes created by the user making the request
+    // If there are errors, do not show any notes (empty array)
+    // If everything is find, show the notes
+    Note.find({ 'author.id': req.user._id }, function(error, notes) {
+        if (error) {
+            res.render('dashboard/addNote', { moment: moment, notes: [], categories: [], pathname: '/dashboard' });
+        } else {
+            res.render('dashboard/addNote', { moment: moment, notes: notes, categories: categories, pathname: '/dashboard' }); 
+            // "moment" is included in order to format dates on the client side
+        }
+    });
+});
+
 // POST request
 // Create a new category
 router.post('/categories', isLoggedIn, async (req, res) => {
@@ -43,11 +62,11 @@ router.post('/categories', isLoggedIn, async (req, res) => {
 
         newCategory.save();
 
-        res.redirect('/dashboard');
+        res.redirect('back');
     } catch(err) {
         // If there are errors: send a 400 status along with an error
         res.status(400).send(err);
-        res.render('dashboard');
+        res.redirect('back');
     }
 });
 
@@ -69,9 +88,9 @@ router.get('/notes/:id', isLoggedIn, async (req, res) => {
     // If everything is find, show the note
     Note.findById(req.params.id, function(error, note) {
         if (error) {
-            res.render('dashboard/notes', { moment: moment, note: note, notes: [], categories: [], pathname: '/dashboard' });
+            res.render('dashboard/editNote', { moment: moment, note: note, notes: [], categories: [], pathname: '/dashboard' });
         } else {
-            res.render('dashboard/notes', { moment: moment, note: note, notes: notes, categories: categories, pathname: '/dashboard' }); 
+            res.render('dashboard/editNote', { moment: moment, note: note, notes: notes, categories: categories, pathname: '/dashboard' }); 
             // "moment" is included in order to format dates on the client side
         }
     });

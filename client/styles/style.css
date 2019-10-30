@@ -93,6 +93,10 @@ body {
     border-bottom: 3px solid #fff;
 }
 
+#link-user-name {
+    border-right: 1px solid rgba(251, 251, 251, 0.342);
+}
+
 /* Forms */
 .form-container {
     position: absolute;
@@ -182,6 +186,7 @@ body {
 /* -- Dashboard: Sidebars -- */
 
 #app-links-sidebar {
+    width: 69px;
     height: calc(100vh - 41px);
     background-color: rgb(42, 51, 56);
     z-index: 2;
@@ -208,34 +213,47 @@ body {
     display: flex;
     flex-direction: column;
     padding-top: 2em;
+    align-items: center;
 }
 
 #app-links-sidebar nav ul li {
     display: flex;
     flex-direction: row;
-    /* justify-content: space-between; */
+    justify-content: center;
     align-items: center;
     padding: 1em 0;
     color: #fff;
 }
 
 #app-links-sidebar nav ul li a,
+#app-links-sidebar_add-note,
 #app-links-sidebar nav span a {
-    margin-left: 10px;
     font-size: .9em;
     color: #fff;
     cursor: pointer;
 }
 
-#app-links-sidebar nav ul li:nth-child(2) a {
-    margin-left: 15px;
+#app-links-sidebar nav ul li a i,
+#app-links-sidebar_add-note i,
+#app-links-sidebar nav span a i {
+    width: 21px;
+    text-align: center;
 }
 
-/* #app-links-sidebar nav ul li a:hover,
-#app-links-sidebar nav span a:hover,
-.active-sidebar-link {
-    font-weight: bold;
-} */
+#app-links-sidebar nav span a i {
+    transform: rotate(180deg);
+}
+
+#app-links-sidebar nav ul li:nth-child(1) {
+    background-color: #2B876F;
+    border-radius: 50px;
+    padding: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1em;
+    cursor: pointer;
+}
 
 #app-notes-sidebar {
     display: flex;
@@ -306,6 +324,7 @@ body {
 }
 
 #new-category-form {
+    z-index: 2;
     position: absolute;
     top: 3em;
     left: 50%;
@@ -375,20 +394,20 @@ body {
 
 #app-dashboard-container-create-note_header,
 #app-dashboard-container-edit-note_header {
-    padding: .5em 2em .5em 2em;
+    padding: .5em 2em;
 }
 
 #app-dashboard-container-create-note_header_top,
 #app-dashboard-container-edit-note_header_top {
-    padding: .5em 2em .5em 2em;
-    border-bottom: 1px solid rgba(49, 59, 65, 0.171);
+    padding: .55em 2em;
+    border-bottom: 1px solid rgba(49, 59, 65, 0.2);
 }
 
 #app-dashboard-container-create-note_header input,
 #app-dashboard-container-edit-note_header input {
     padding: .5em;
     border: none;
-    border-bottom: 1px solid #313B41;
+    border-bottom: 1px solid rgba(49, 59, 65, 0.3);
     width: 20em;
     outline: none;
     font-size: 1.3em;
@@ -466,6 +485,16 @@ body {
     border-radius: 5px;
     font-size: .9em;
     outline: none;
+}
+
+#add-category-btn {
+    padding: 5px 10px;
+    border: 1px solid #2B876F;
+    border-radius: 5px;
+    background-color: #2B876F;
+    outline: none;
+    color: #fff;
+    cursor: pointer;
 }
 
 #add-note-btn {
