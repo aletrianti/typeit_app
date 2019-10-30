@@ -175,7 +175,7 @@ body {
     justify-content: center;
     align-items: flex-start;
     /* height: calc(100vh - 41px); */
-    padding: 30px;
+    /* padding: 30px; */
     flex: 1;
 }
 
@@ -364,8 +364,9 @@ body {
     width: 100%;
     height: 100%;
     background-color: #FBFBFB;
-    box-shadow: 4px 0px 50px rgba(0, 0, 0, 0.25);
-    border-radius: 25px;
+    box-shadow: 4px 0px 30px rgba(0, 0, 0, 0.25);
+    /* border-radius: 25px; */
+    z-index: 1;
 }
 
 .hidden-note-form {
@@ -374,15 +375,13 @@ body {
 
 #app-dashboard-container-create-note_header,
 #app-dashboard-container-edit-note_header {
-    padding: 2em 2em .5em 2em;
+    padding: .5em 2em .5em 2em;
 }
 
 #app-dashboard-container-create-note_header_top,
 #app-dashboard-container-edit-note_header_top {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    padding: .5em 2em .5em 2em;
+    border-bottom: 1px solid rgba(49, 59, 65, 0.171);
 }
 
 #app-dashboard-container-create-note_header input,
@@ -390,9 +389,10 @@ body {
     padding: .5em;
     border: none;
     border-bottom: 1px solid #313B41;
-    width: 60%;
+    width: 20em;
     outline: none;
     font-size: 1.3em;
+    background-color: transparent;
 }
 
 #app-dashboard-container-create-note_buttons,
@@ -400,6 +400,7 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: flex-end;
 }
 
 #app-dashboard-container-create-note_buttons .app-dashboard-btns,
@@ -417,6 +418,14 @@ body {
     background-color: #2B876F;
     color: #FBFBFB;
     border: 1px solid #2B876F;
+    margin-right: 10px;
+}
+
+#app-dashboard-container-create-note_buttons #share-note-btn,
+#app-dashboard-container-edit-note_buttons #share-note-btn {
+    background-color: #313B41;
+    color: #FBFBFB;
+    border: 1px solid #313B41;
     margin-right: 10px;
 }
 
@@ -488,5 +497,42 @@ body {
     outline: none;
     resize: none;
     border: none;
+    background-color: transparent;
+}
+
+/* Share note dialog */
+
+#app-share-note-dialog-container {
+    z-index: 10;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 100vw;
+    height: 100vh;
+}
+
+#app-share-note-dialog {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    padding: 2em;
+    background-color: #FBFBFB;
+    border-radius: 25px;
+}
+
+#app-share-note-dialog form {
+    display: flex;
+    flex-direction: column;
+}
+
+#app-share-note-dialog-icon {
+    margin-bottom: .5em;
+}
+
+#app-share-note-dialog-icon i {
+    cursor: pointer;
+    float: right;
 }
 

@@ -1,13 +1,14 @@
 <form action="/dashboard/notes/<%= note._id %>?_method=put" method="post" id="app-dashboard-container-edit-note">
-    <div id="app-dashboard-container-edit-note_header">
-        <div id="app-dashboard-container-edit-note_header_top">
-            <input type="text" name="title" id="note-title" value="<%= note.title %>">
-
-            <div id="app-dashboard-container-edit-note_buttons">
-                <button id="save-note-btn" class="app-dashboard-btns">Save</button>
-                <a id="cancel-note-btn" class="app-dashboard-btns" href="/dashboard">Cancel</a>
-            </div>
+    <div id="app-dashboard-container-edit-note_header_top">
+        <div id="app-dashboard-container-edit-note_buttons">
+            <button id="save-note-btn" class="app-dashboard-btns">Save</button>
+            <span id="share-note-btn" class="app-dashboard-btns" onClick="shareNote()">Share</span>
+            <a id="cancel-note-btn" class="app-dashboard-btns" href="/dashboard">Cancel</a>
         </div>
+    </div>
+    
+    <div id="app-dashboard-container-edit-note_header">
+        <input type="text" name="title" id="note-title" value="<%= note.title %>">
 
         <div id="app-dashboard-container-edit-note_header_options">
             <!-- <div id="app-dashboard-container-edit-note_header_date">
