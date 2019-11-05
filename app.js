@@ -57,11 +57,15 @@ app.use((req, res, next) => {
 // Require routes
 const authRoutes = require('./routes/auth');
 const dashboardRoutes = require('./routes/dashboard');
+const noteRoutes = require('./routes/note');
+const categoryRoutes = require('./routes/category');
 const calendarRoutes = require('./routes/calendar');
 
 // Use required routes
 app.use('/', authRoutes);
 app.use('/dashboard', dashboardRoutes);
+app.use('/dashboard/notes', noteRoutes);
+app.use('/dashboard/categories', categoryRoutes);
 app.use('/calendar', calendarRoutes);
 
 // Serve static assets in production
