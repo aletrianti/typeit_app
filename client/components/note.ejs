@@ -1,4 +1,9 @@
 <a class="note-prev" href="/dashboard/notes/<%= note._id %>">
-    <b><%= note.title %></b> <br>
-    <span><%= note.category.name %> - <%= moment(note.createdAt).calendar() %></span>
+    <div class="note-prev-info">
+        <b><%= note.title %></b> <br>
+        <span><%= note.category.name %> - <%= moment(note.createdAt).calendar() %></span>
+    </div>
+    <form action="/dashboard/notes/delete/<%= note._id %>?_method=delete" method="post">
+        <button><i class="fas fa-trash-alt"></i></button>
+    </form>
 </a>

@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const registerValidation = require("../validation/authValidation").registerValidation;
-const loginValidation = require("../validation/authValidation").loginValidation;
+// const loginValidation = require("../validation/authValidation").loginValidation;
 const User = require("../models/User");
 
 // GET request 

@@ -1,0 +1,6 @@
+<div class="category-prev">
+    <span><%= category.name %></span>
+    <form action="/dashboard/categories/<%= category._id %>?_method=delete" method="post">
+        <button><i class="fas fa-trash-alt"></i></button>
+    </form>
+</div>

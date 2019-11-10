@@ -64,7 +64,7 @@ router.post('/', isLoggedIn, async (req, res) => {
 
 // POST request
 // Edit a specific note
-router.post('/:id', isLoggedIn, async (req, res) => {
+router.post('/edit/:id', isLoggedIn, async (req, res) => {
     // Select category name based on the category chosen in the select field
     let categoryName;
 
@@ -78,6 +78,7 @@ router.post('/:id', isLoggedIn, async (req, res) => {
             .catch((err) => { if (err) throw err; });
     }
 
+    // Find a note with a specific id and update based on the data from the form
     Note.findOneAndUpdate({ _id: req.params.id }, {
         $set: {
             title: req.body.title,
@@ -92,12 +93,29 @@ router.post('/:id', isLoggedIn, async (req, res) => {
                 lastName: req.user.lastName
             }
         }
-    }, { new: true }, (err, note) => {
+    }, 
+    { new: true }, // Return the newly updated version of the document
+    (err, note) => {
         if (err) { console.log(err); }
-        console.log(note);
     });
 
     res.redirect('back');
+});
+
+// POST request
+// Delete a specific note
+router.post('/delete/:id', isLoggedIn, async (req, res) => {
+    try {
+        Note.findByIdAndRemove({ _id: req.params.id }, (err) => {
+            if (err) { console.log(err); }
+                console.log('Document removed!');
+            });
+
+            res.redirect('back');
+    } catch(err) {
+        console.log(err);
+        res.redirect('back');
+    }
 });
 
 module.exports = router;

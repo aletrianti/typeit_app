@@ -25,16 +25,32 @@ router.post('/', isLoggedIn, async (req, res) => {
 
         res.redirect('back');
     } catch(err) {
-        // If there are errors: send a 400 status along with an error
-        res.status(400).send(err);
         res.redirect('back');
     }
 });
 
 // POST request
-// Edit a category
-router.post('/:id', isLoggedIn, (req, res) => {
+// Delete a category
+router.post('/:id', isLoggedIn, async (req, res) => {
+    const noteCategory = await Note.find({ 'author.id': req.user._id, 'category.id': req.params.id })
+        .then((note) => { return note; })
+        .catch((err) => { if (err) throw err; });
 
+    try {
+        if (noteCategory.length !== 0) {
+            res.redirect('back');
+        } else {
+            Category.findByIdAndRemove({ _id: req.params.id }, (err) => {
+            if (err) { console.log(err); }
+                console.log('Document removed!');
+            });
+
+            res.redirect('back');
+        }
+    } catch(err) {
+        console.log(err);
+        res.redirect('back');
+    }
 });
 
 module.exports = router;
