@@ -32,6 +32,21 @@ body {
     right: -20em;
 }
 
+#app-dashboard-initial-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: calc(100vw - 274px);
+}
+
+#app-dashboard-initial-text span {
+    font-size: 1.5em;
+    text-align: center;
+    width: 100%;
+    color: rgba(0, 0, 0, 0.3);
+}
+
 /* Header */
 #app-header {
     display: flex;
@@ -380,7 +395,7 @@ body {
 }
 
 .sidebar-categories-sub-header {
-    padding: 15px 18px;
+    padding: 15px 30px;
     font-size: .8em;
     text-align: left;
 }
@@ -428,7 +443,7 @@ body {
 #new-category-btn {
     background: #2B876F;
     color: #fff;
-    margin-right: 10px;
+    /* margin-right: 10px; */
 }
 
 #cancel-category-btn {
