@@ -9,7 +9,7 @@ const User = require("../models/User");
 // GET request 
 // Render the index page
 router.get('/', (req, res) => {
-    res.render('index');
+    res.redirect('/login');
 });
 
 // GET request 

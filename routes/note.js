@@ -54,7 +54,7 @@ router.post('/', isLoggedIn, async (req, res) => {
 
         newNote.save();
 
-        res.redirect('/dashboard');
+        res.redirect('back');
     } catch(err) {
         // If there are errors: send a 400 status along with an error
         res.status(400).send(err);
@@ -66,11 +66,38 @@ router.post('/', isLoggedIn, async (req, res) => {
 // Edit a specific note
 router.post('/:id', isLoggedIn, async (req, res) => {
     // Select category name based on the category chosen in the select field
-    const categoryName = await Category.find({ _id: req.body.category }, { 'name': 1, '_id': 0 })
-        .then((name) => { return name[0].name; })
-        .catch((err) => { if (err) throw err; });
+    let categoryName;
 
+    if (req.body.category !== '' && req.body.category !== null) {
+        categoryName = await Category.find({ _id: req.body.category })
+            .then((category) => { return category[0]; })
+            .catch((err) => { if (err) throw err; });
+    } else {
+        categoryName = await Note.find({ _id: req.params.id })
+            .then((note) => { return note[0].category; })
+            .catch((err) => { if (err) throw err; });
+    }
 
+    Note.findOneAndUpdate({ _id: req.params.id }, {
+        $set: {
+            title: req.body.title,
+            body: req.body.body,
+            category: {
+                id: categoryName.id,
+                name: categoryName.name
+            },
+            author: {
+                id: req.user._id,
+                firstName: req.user.firstName,
+                lastName: req.user.lastName
+            }
+        }
+    }, { new: true }, (err, note) => {
+        if (err) { console.log(err); }
+        console.log(note);
+    });
+
+    res.redirect('back');
 });
 
 module.exports = router;
