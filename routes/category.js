@@ -9,21 +9,30 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 // POST request
 // Create a new category
 router.post('/', isLoggedIn, async (req, res) => {
+    // Check if there is already a category with the same name. If there is one, do not allow the user to create it again.
+    const categoryName = await Category.find({ name: req.body.name }, { 'name': 1, '_id': 0 })
+        .then((category) => { return category; })
+        .catch((err) => { if (err) throw err; });
+
     // Create a new category
     // If there are no errors: save the category into the database and redirect them to '/dashboard'
     try {
-        const newCategory = new Category({
-            name: req.body.name,
-            author: {
-                id: req.user._id,
-                firstName: req.user.firstName,
-                lastName: req.user.lastName
-            }
-        });
-
-        newCategory.save();
-
-        res.redirect('back');
+        if (categoryName.length !== 0) {
+            res.redirect('back');
+        } else {
+            const newCategory = new Category({
+                name: req.body.name,
+                author: {
+                    id: req.user._id,
+                    firstName: req.user.firstName,
+                    lastName: req.user.lastName
+                }
+            });
+    
+            newCategory.save();
+    
+            res.redirect('back');
+        }
     } catch(err) {
         res.redirect('back');
     }

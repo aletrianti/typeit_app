@@ -30,6 +30,11 @@ router.get('/:id', isLoggedIn, async (req, res) => {
 // POST request
 // Create a new note
 router.post('/', isLoggedIn, async (req, res) => {
+    // Check if there is already a note with the same title. If there is one, do not allow the user to create it again.
+    const noteTitle = await Note.find({ title: req.body.title }, { 'title': 1, '_id': 0 })
+        .then((note) => { return note; })
+        .catch((err) => { if (err) throw err; });
+
     // Select category name based on the category chosen in the select field
     const categoryName = await Category.find({ _id: req.body.category }, { 'name': 1, '_id': 0 })
         .then((name) => { return name[0].name; })
@@ -38,23 +43,27 @@ router.post('/', isLoggedIn, async (req, res) => {
     // Create a new note
     // If there are no errors: save the note into the database and redirect them to '/dashboard'
     try {
-        const newNote = new Note({
-            title: req.body.title,
-            body: req.body.body,
-            category: {
-                id: req.body.category,
-                name: categoryName
-            },
-            author: {
-                id: req.user._id,
-                firstName: req.user.firstName,
-                lastName: req.user.lastName
-            }
-        });
-
-        newNote.save();
-
-        res.redirect('back');
+        if (noteTitle.length !== 0) {
+            res.redirect('back');
+        } else {
+            const newNote = new Note({
+                title: req.body.title,
+                body: req.body.body,
+                category: {
+                    id: req.body.category,
+                    name: categoryName
+                },
+                author: {
+                    id: req.user._id,
+                    firstName: req.user.firstName,
+                    lastName: req.user.lastName
+                }
+            });
+    
+            newNote.save();
+    
+            res.redirect('back');
+        }
     } catch(err) {
         // If there are errors: send a 400 status along with an error
         res.status(400).send(err);
@@ -65,6 +74,11 @@ router.post('/', isLoggedIn, async (req, res) => {
 // POST request
 // Edit a specific note
 router.post('/edit/:id', isLoggedIn, async (req, res) => {
+    // Check if there is already a note with the same title. If there is one, do not allow the user to edit the note with that title.
+    const noteTitle = await Note.find({ title: req.body.title }, { 'title': 1, '_id': 0 })
+        .then((note) => { return note; })
+        .catch((err) => { if (err) throw err; });
+
     // Select category name based on the category chosen in the select field
     let categoryName;
 
@@ -78,28 +92,32 @@ router.post('/edit/:id', isLoggedIn, async (req, res) => {
             .catch((err) => { if (err) throw err; });
     }
 
-    // Find a note with a specific id and update based on the data from the form
-    Note.findOneAndUpdate({ _id: req.params.id }, {
-        $set: {
-            title: req.body.title,
-            body: req.body.body,
-            category: {
-                id: categoryName.id,
-                name: categoryName.name
-            },
-            author: {
-                id: req.user._id,
-                firstName: req.user.firstName,
-                lastName: req.user.lastName
+    if (noteTitle.length !== 0) {
+        res.redirect('back');
+    } else {
+        // Find a note with a specific id and update based on the data from the form
+        Note.findOneAndUpdate({ _id: req.params.id }, {
+            $set: {
+                title: req.body.title,
+                body: req.body.body,
+                category: {
+                    id: categoryName.id,
+                    name: categoryName.name
+                },
+                author: {
+                    id: req.user._id,
+                    firstName: req.user.firstName,
+                    lastName: req.user.lastName
+                }
             }
-        }
-    }, 
-    { new: true }, // Return the newly updated version of the document
-    (err, note) => {
-        if (err) { console.log(err); }
-    });
+        }, 
+        { new: true }, // Return the newly updated version of the document
+        (err, note) => {
+            if (err) { console.log(err); }
+        });
 
-    res.redirect('back');
+        res.redirect('back');
+    }
 });
 
 // POST request
