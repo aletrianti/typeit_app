@@ -1,20 +1,13 @@
-<form action="/dashboard/notes" method="post" id="app-dashboard-container-create-note">
-    <div id="app-dashboard-container-create-note_header_top">
-        <div id="app-dashboard-container-create-note_buttons">
-            <button id="save-note-btn" class="app-dashboard-btns">Save</button>
-            <span id="share-note-btn" class="app-dashboard-btns" onClick="shareNote()">Share</span>
-            <a id="cancel-note-btn" class="app-dashboard-btns" href="/dashboard">Cancel</a>
-        </div>
-    </div>
+<div id="app-dashboard-container-create-note-container">
+    <form action="/dashboard/notes" method="post" id="app-dashboard-container-create-note">
+        <h1>Create a new note</h1>
     
-    <div id="app-dashboard-container-create-note_header">
-        <input type="text" name="title" id="note-title" placeholder="New note...">
-
-        <div id="app-dashboard-container-create-note_header_options">
-            <!-- <div id="app-dashboard-container-create-note_header_date">
-                <span id="note-creation-date">Created on: DATE HERE</span>
-            </div> -->
-
+        <div class="form-field create-note-form-field">
+            <label for="title">Write a title</label>
+            <input type="text" name="title" id="note-title" placeholder="New note title...">
+        </div>
+        <div class="form-field create-note-form-field">
+            <label for="category">Select a category</label>
             <div id="app-dashboard-container-create-note_header_category">
                 <% if(categories !== []) { %>
                     <select name="category" id="select-category">
@@ -23,15 +16,13 @@
                             <option value="<%= category._id %>"><%= category.name %></option>
                         <% }); %>
                     </select>
-                <% } %>      
-                <!-- <span id="add-category-btn" onClick="addNewCategory()">
-                    <i class="fa fa-plus"></i>
-                </span>     -->
+                <% } %>
             </div>
         </div>
-    </div>
-
-    <div id="app-dashboard-container-create-note_textarea">
-        <textarea name="body" id="note-body" placeholder="Write something here..."></textarea>
-    </div>
-</form>
+    
+        <div id="app-dashboard-container-create-note_buttons">
+            <a id="cancel-note-btn" class="app-dashboard-btns" href="/dashboard">Cancel</a>
+            <button id="save-note-btn" class="app-dashboard-btns">Next</button>
+        </div>
+    </form>
+</div>

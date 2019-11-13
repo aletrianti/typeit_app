@@ -9,8 +9,7 @@ const NoteSchema = new mongoose.Schema({
         required: true
     },
     body: {
-        type: String,
-        required: true
+        type: String
     },
     category: {
         id: {

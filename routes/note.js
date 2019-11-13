@@ -19,10 +19,22 @@ router.get('/:id', isLoggedIn, async (req, res) => {
     // If everything is find, show the note
     Note.findById(req.params.id, function(error, note) {
         if (error) {
-            res.render('dashboard/editNote', { moment: moment, note: note, notes: [], categories: [], pathname: '/dashboard' });
+            res.render('dashboard/editNote', { 
+                moment: moment, 
+                note: note, 
+                notes: [], 
+                categories: [], 
+                pathname: '/dashboard' 
+            });
         } else {
-            res.render('dashboard/editNote', { moment: moment, note: note, notes: notes, categories: categories, pathname: '/dashboard' }); 
-            // "moment" is included in order to format dates on the client side
+            res.render('dashboard/editNote', { 
+                // "moment" is included in order to format dates on the client side
+                moment: moment, 
+                note: note, 
+                notes: notes, 
+                categories: categories, 
+                pathname: '/dashboard' 
+            }); 
         }
     });
 });
@@ -41,33 +53,27 @@ router.post('/', isLoggedIn, async (req, res) => {
         .catch((err) => { if (err) throw err; });
     
     // Create a new note
-    // If there are no errors: save the note into the database and redirect them to '/dashboard'
-    try {
-        if (noteTitle.length !== 0) {
-            res.redirect('back');
-        } else {
-            const newNote = new Note({
-                title: req.body.title,
-                body: req.body.body,
-                category: {
-                    id: req.body.category,
-                    name: categoryName
-                },
-                author: {
-                    id: req.user._id,
-                    firstName: req.user.firstName,
-                    lastName: req.user.lastName
-                }
-            });
-    
-            newNote.save();
-    
-            res.redirect('back');
-        }
-    } catch(err) {
-        // If there are errors: send a 400 status along with an error
-        res.status(400).send(err);
-        res.render('dashboard');
+    // If there are no errors: save the note into the database and redirect the user to '/dashboard'
+    if (noteTitle.length !== 0) {
+        res.redirect('back');
+    } else {
+        const newNote = new Note({
+            title: req.body.title,
+            body: req.body.body,
+            category: {
+                id: req.body.category,
+                name: categoryName
+            },
+            author: {
+                id: req.user._id,
+                firstName: req.user.firstName,
+                lastName: req.user.lastName
+            }
+        });
+
+        newNote.save();
+
+        res.redirect('/dashboard');
     }
 });
 

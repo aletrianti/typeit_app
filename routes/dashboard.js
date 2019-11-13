@@ -16,12 +16,22 @@ router.get('/', isLoggedIn, async (req, res) => {
     // Find notes created by the user making the request
     // If there are errors, do not show any notes (empty array)
     // If everything is find, show the notes
-    Note.find({ 'author.id': req.user._id }, function(error, notes) {
+    Note.find({ 'author.id': req.user._id }, (error, notes) => {
         if (error) {
-            res.render('dashboard', { moment: moment, notes: [], categories: [], pathname: '/dashboard' });
+            res.render('dashboard', { 
+                // "moment" is included in order to format dates on the client side
+                moment: moment, 
+                notes: [], 
+                categories: [], 
+                pathname: '/dashboard' 
+            });
         } else {
-            res.render('dashboard', { moment: moment, notes: notes, categories: categories, pathname: '/dashboard' }); 
-            // "moment" is included in order to format dates on the client side
+            res.render('dashboard', { 
+                moment: moment, 
+                notes: notes, 
+                categories: categories, 
+                pathname: '/dashboard' 
+            }); 
         }
     });
 });
@@ -35,12 +45,22 @@ router.get('/new-note', isLoggedIn, async (req, res) => {
     // Find notes created by the user making the request
     // If there are errors, do not show any notes (empty array)
     // If everything is find, show the notes
-    Note.find({ 'author.id': req.user._id }, function(error, notes) {
+    Note.find({ 'author.id': req.user._id }, (error, notes) => {
         if (error) {
-            res.render('dashboard/addNote', { moment: moment, notes: [], categories: [], pathname: '/dashboard' });
+            res.render('dashboard/addNote', { 
+                // "moment" is included in order to format dates on the client side
+                moment: moment, 
+                notes: [], 
+                categories: [], 
+                pathname: '/dashboard' 
+            });
         } else {
-            res.render('dashboard/addNote', { moment: moment, notes: notes, categories: categories, pathname: '/dashboard' }); 
-            // "moment" is included in order to format dates on the client side
+            res.render('dashboard/addNote', { 
+                moment: moment, 
+                notes: notes, 
+                categories: categories, 
+                pathname: '/dashboard' 
+            }); 
         }
     });
 });

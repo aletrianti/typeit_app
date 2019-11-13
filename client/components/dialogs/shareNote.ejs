@@ -1,17 +1,15 @@
 <div id="app-share-note-dialog-container" class="hidden-note-form">
     <div id="app-share-note-dialog">
-        <div id="app-share-note-dialog-icon">
-            <i class="fas fa-times" onClick="hideDialog()"></i>
-        </div>
-
         <h3>Share note</h3>
 
         <form action="/share-note" method="post">
-            <span>Insert email(s) here</span>
+            <div class="form-field share-note-form-field">
+                <label>Insert email(s) here</label>
+                <input type="text" name="email" id="share-email" placeholder="Email(s)...">
+            </div>
 
-            <input type="text" name="email" id="share-email" placeholder="Email(s)...">
-
-            <button>Share</button>
+            <span id="cancel-note-btn" class="app-dashboard-btns" onClick="hideDialog()">Cancel</span>
+            <button id="save-note-btn" class="app-dashboard-btns">Share</button>
         </form>
     
         <span>Each user added will be able to edit this note.</span>

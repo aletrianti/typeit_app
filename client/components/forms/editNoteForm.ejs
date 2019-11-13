@@ -3,7 +3,7 @@
         <div id="app-dashboard-container-edit-note_buttons">
             <button id="save-note-btn" class="app-dashboard-btns">Save</button>
             <span id="share-note-btn" class="app-dashboard-btns" onClick="shareNote()">Share</span>
-            <a id="cancel-note-btn" class="app-dashboard-btns" href="/dashboard">Cancel</a>
+            <a id="cancel-note-btn" class="app-dashboard-btns" href="/dashboard">Back</a>
         </div>
     </div>
     
@@ -32,6 +32,6 @@
     </div>
 
     <div id="app-dashboard-container-edit-note_textarea">
-        <textarea name="body" id="note-body"><%= note.body %></textarea>
+        <textarea name="body" id="note-body" placeholder="Write something here..."><%= note.body %></textarea>
     </div>
 </form>
