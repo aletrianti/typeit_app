@@ -492,12 +492,15 @@ body {
     text-align: center;
     margin-bottom: .8em;
     padding: .8em;
-    background-color: #2B876F;
+    background-color: #313B41;
     color: #fff;
 }
 
 .create-note-form-field,
-.share-note-form-field {
+.share-note-form-field,
+#show-emails,
+#app-share-note-dialog_buttons,
+#app-share-note-info-msg {
     padding: 0 1.5em .8em 1.5em;
 }
 
@@ -562,6 +565,7 @@ body {
 
 #app-dashboard-container-create-note_buttons .app-dashboard-btns,
 #app-dashboard-container-edit-note_buttons .app-dashboard-btns,
+#app-share-note-dialog_buttons .share-note-btns,
 #add-note-btn {
     padding: 5px 10px;
     border-radius: 5px;
@@ -570,12 +574,14 @@ body {
     color: #000;
 }
 
-#app-dashboard-container-create-note_buttons .app-dashboard-btns {
+#app-dashboard-container-create-note_buttons .app-dashboard-btns,
+#app-share-note-dialog_buttons .share-note-btns {
     padding: 10px 30px;
 }
 
 #app-dashboard-container-create-note_buttons #save-note-btn,
-#app-dashboard-container-edit-note_buttons #save-note-btn {
+#app-dashboard-container-edit-note_buttons #save-note-btn,
+#app-share-note-dialog_buttons #save-note-btn {
     background-color: #2B876F;
     color: #FBFBFB;
     border: 1px solid #2B876F;
@@ -594,7 +600,8 @@ body {
 }
 
 #app-dashboard-container-create-note_buttons #cancel-note-btn,
-#app-dashboard-container-edit-note_buttons #cancel-note-btn {
+#app-dashboard-container-edit-note_buttons #cancel-note-btn,
+#app-share-note-dialog_buttons #cancel-note-btn {
     border: 1px solid rgba(49, 59, 65, 0.5);
 }
 
@@ -685,7 +692,7 @@ body {
     display: flex;
     flex-direction: column;
     position: absolute;
-    width: 20em;
+    width: 25em;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
@@ -699,7 +706,7 @@ body {
     text-align: center;
     margin-bottom: .8em;
     padding: .8em;
-    background-color: #2B876F;
+    background-color: #313B41;
     color: #fff;
 }
 
@@ -708,12 +715,83 @@ body {
     flex-direction: column;
 }
 
-#app-share-note-dialog form label {
+#app-share-note-dialog form label,
+#show-emails h4,
+#show-emails ul {
     padding-left: .5em;
     margin-bottom: .5em;
 }
 
+#add-emails {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
 #app-share-note-dialog form input {
-    
+    flex: 1;
+}
+
+#add-emails-btn {
+    cursor: pointer;
+    margin-left: 1em;
+    background-color: #2B876F;
+    border-radius: 50px;
+    width: 1em;
+    height: 1em;
+    padding: .5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#add-emails-btn i {
+    width: 21px;
+    text-align: center;
+    color: #fff;
+}
+
+.share-note-form-field span {
+    font-size: .7em;
+    padding: .5em .7em;
+}
+
+/* #show-emails { */
+    /* max-height: 6em;
+    overflow-y: auto; */
+/* } */
+
+#show-emails h4 {
+    font-weight: 300;
+    font-size: .9em;
+}
+
+#show-emails-list {
+    max-height: 6em;
+    overflow-y: auto;
+}
+
+.show-emails-list-items {
+    padding: .5em 1em;
+    font-size: .8em;
+}
+
+.show-emails-list-items:nth-of-type(odd) {
+    background-color: rgba(49, 59, 65, 0.2);
+}
+
+#app-share-note-dialog_buttons {
+    margin-top: .7em;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#app-share-note-info-msg {
+    font-size: .8em;
+    margin: 1em;
+    text-align: center;
+    opacity: .7;
 }
 

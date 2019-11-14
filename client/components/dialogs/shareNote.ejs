@@ -2,16 +2,31 @@
     <div id="app-share-note-dialog">
         <h3>Share note</h3>
 
-        <form action="/share-note" method="post">
+        <form action="/dashboard/notes/share-note/<%= note._id %>?_method=put" method="post">
             <div class="form-field share-note-form-field">
-                <label>Insert email(s) here</label>
-                <input type="text" name="email" id="share-email" placeholder="Email(s)...">
+                <label for="emails">Insert email(s) here</label>
+                <span>To invite more than one person, separate each email with a comma (,). Ex: user@test.com, user2@test.com</span>
+                <div id="add-emails">
+                    <input type="text" name="emails" id="add-participants" placeholder="Email(s)...">
+                    <!-- <div id="add-emails-btn" onClick="addEmailToList()">
+                        <i class="fa fa-plus"></i>
+                    </div> -->
+                </div>
             </div>
 
-            <span id="cancel-note-btn" class="app-dashboard-btns" onClick="hideDialog()">Cancel</span>
-            <button id="save-note-btn" class="app-dashboard-btns">Share</button>
+            <!-- <div id="show-emails">
+                <h4>Emails:</h4>
+                <ul id="show-emails-list">
+                    
+                </ul>
+            </div> -->
+
+            <div id="app-share-note-dialog_buttons">
+                <span id="cancel-note-btn" class="share-note-btns" onClick="hideDialog()">Cancel</span>
+                <button id="save-note-btn" class="share-note-btns">Share</button>
+            </div>
         </form>
     
-        <span>Each user added will be able to edit this note.</span>
+        <span id="app-share-note-info-msg">Each user added will be able to edit this note.</span>
     </div>
 </div>

@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Category = require("../models/Category");
 const Note = require("../models/Note");
+const User = require("../models/User");
 const moment = require('moment');
 
 // Adding this middleware inside of requests used to render routes will make the routes protected
@@ -80,8 +81,9 @@ router.post('/', isLoggedIn, async (req, res) => {
 // POST request
 // Edit a specific note
 router.post('/edit/:id', isLoggedIn, async (req, res) => {
-    // Check if there is already a note with the same title. If there is one, do not allow the user to edit the note with that title.
-    const noteTitle = await Note.find({ title: req.body.title }, { 'title': 1, '_id': 0 })
+    // Check if there is already a note with the same title. 
+    // If there is one, and its id is not the same as the note being edited, do not allow the user to edit the note with that title.
+    const noteTitle = await Note.find({ title: req.body.title, _id: { '$ne': req.params.id } }, { 'title': 1, '_id': 1 })
         .then((note) => { return note; })
         .catch((err) => { if (err) throw err; });
 
@@ -109,11 +111,6 @@ router.post('/edit/:id', isLoggedIn, async (req, res) => {
                 category: {
                     id: categoryName.id,
                     name: categoryName.name
-                },
-                author: {
-                    id: req.user._id,
-                    firstName: req.user.firstName,
-                    lastName: req.user.lastName
                 }
             }
         }, 
@@ -140,6 +137,57 @@ router.post('/delete/:id', isLoggedIn, async (req, res) => {
         console.log(err);
         res.redirect('back');
     }
+});
+
+// POST request
+// Share a specific note
+router.post('/share-note/:id', isLoggedIn, async (req, res) => {
+    // If more than one email was written, split the array and iterate over it to get the emails separately
+    // If there is just one, userEmail = req.body.emails
+    const inputBody = req.body.emails;
+    const splitWithSpace = inputBody.split(', ');
+    const splitWithoutSpace = inputBody.split(',');
+
+    let userEmail;
+
+    if (inputBody.includes(', ') === true) {
+        splitWithSpace.forEach((i) => {
+            userEmail = i;
+            console.log(userEmail);
+        });
+    } else if (inputBody.includes(',') === true) {
+        splitWithoutSpace.forEach((i) => {
+            userEmail = i;
+            console.log(userEmail);
+        });
+    } else {
+        userEmail = req.body.emails;
+    }
+
+    // Find user with the email specified
+    const invitedUser = await User.find({ email: userEmail })
+        .then((user) => { console.log(user); return user; })
+        .catch((err) => { if (err) throw err; });
+
+    // Find a note with a specific id and update based on the data from the share-note form
+    Note.findOneAndUpdate({ _id: req.params.id }, {
+        $set: {
+            participants: [
+                {
+                    id: invitedUser._id,
+                    email: invitedUser.email,
+                    firstName: invitedUser.firstName,
+                    lastName: invitedUser.lastName
+                }
+            ]
+        }
+    }, 
+    { new: true }, // Return the newly updated version of the document
+    (err, note) => {
+        if (err) { console.log(err); }
+    });
+
+    res.redirect('back');
 });
 
 module.exports = router;

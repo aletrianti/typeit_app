@@ -26,6 +26,17 @@ const NoteSchema = new mongoose.Schema({
         firstName: { type: String },
         lastName: { type: String }
     },
+    participants: [
+        {
+            id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            },
+            email: { type: String },
+            firstName: { type: String },
+            lastName: { type: String }
+        }
+    ],
     createdAt: {
         type: Date,
         default: Date.now
