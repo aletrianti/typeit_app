@@ -1,0 +1,46 @@
+{
+    "user": {
+        "_id": "<ObjectId>",
+        "username": "email@email.com",
+        "firstName": "First",
+        "lastName": "Last",
+        "email": "email@email.com",
+        "password": "mypassword123",
+        "createdAt": "2019-11-18T15:49:03.512+00:00"
+    },
+
+    "note": {
+        "_id": "<ObjectId>",
+        "title": "Note title",
+        "body": "This is a note",
+        "category": {
+            "id": "<ObjectId>",
+            "name": "Category 1"
+        },
+        "author": {
+            "id": "<ObjectId>",
+            "firstName": "First",
+            "lastName": "Last"
+        },
+        "participants": [
+            {
+                "id": "<ObjectId>",
+                "email": "email@email.com",
+                "firstName": "First",
+                "lastName": "Last"
+            }
+        ],
+        "createdAt": "2019-11-18T15:49:03.512+00:00"
+    },
+
+    "category": {
+        "_id": "<ObjectId>",
+        "name": "Category 1",
+        "author": {
+            "id": "<ObjectId>",
+            "firstName": "First",
+            "lastName": "Last"
+        },
+        "createdAt": "2019-11-18T15:49:03.512+00:00"
+    }
+}    
