@@ -81,45 +81,61 @@ router.post('/', isLoggedIn, async (req, res) => {
 // POST request
 // Edit a specific note
 router.post('/edit/:id', isLoggedIn, async (req, res) => {
-    // Check if there is already a note with the same title. 
-    // If there is one, and its id is not the same as the note being edited, do not allow the user to edit the note with that title.
-    const noteTitle = await Note.find({ title: req.body.title, _id: { '$ne': req.params.id } }, { 'title': 1, '_id': 1 })
-        .then((note) => { return note; })
-        .catch((err) => { if (err) throw err; });
+    // Start session and transaction
+    const session = await User.startSession();
+    session.startTransaction();
 
-    // Select category name based on the category chosen in the select field
-    let categoryName;
-
-    if (req.body.category !== '' && req.body.category !== null) {
-        categoryName = await Category.find({ _id: req.body.category })
-            .then((category) => { return category[0]; })
+    try {
+        // Check if there is already a note with the same title. 
+        // If there is one, and its id is not the same as the note being edited, do not allow the user to edit the note with that title.
+        const noteTitle = await Note.find({ title: req.body.title, _id: { '$ne': req.params.id } }, { 'title': 1, '_id': 1 })
+            .then((note) => { return note; })
             .catch((err) => { if (err) throw err; });
-    } else {
-        categoryName = await Note.find({ _id: req.params.id })
-            .then((note) => { return note[0].category; })
-            .catch((err) => { if (err) throw err; });
-    }
 
-    if (noteTitle.length !== 0) {
-        res.redirect('back');
-    } else {
-        // Find a note with a specific id and update based on the data from the form
-        Note.findOneAndUpdate({ _id: req.params.id }, {
-            $set: {
-                title: req.body.title,
-                body: req.body.body,
-                category: {
-                    id: categoryName.id,
-                    name: categoryName.name
+        // Select category name based on the category chosen in the select field
+        let categoryName;
+
+        if (req.body.category !== '' && req.body.category !== null) {
+            categoryName = await Category.find({ _id: req.body.category })
+                .then((category) => { return category[0]; })
+                .catch((err) => { if (err) throw err; });
+        } else {
+            categoryName = await Note.find({ _id: req.params.id })
+                .then((note) => { return note[0].category; })
+                .catch((err) => { if (err) throw err; });
+        }
+
+        if (noteTitle.length !== 0) {
+            res.redirect('back');
+        } else {
+            // Find a note with a specific id and update based on the data from the form
+            Note.findOneAndUpdate({ _id: req.params.id }, {
+                $set: {
+                    title: req.body.title,
+                    body: req.body.body,
+                    category: {
+                        id: categoryName.id,
+                        name: categoryName.name
+                    }
                 }
-            }
-        }, 
-        { new: true }, // Return the newly updated version of the document
-        (err, note) => {
-            if (err) { console.log(err); }
-        });
+            }, 
+            { new: true }, // Return the newly updated version of the document
+            (err, note) => {
+                if (err) { console.log(err); }
+            });
 
-        res.redirect('back');
+            res.redirect('back');
+        }
+
+        // If everything goes well, commit the transaction and end the session
+        await session.commitTransaction();
+        session.endSession();
+        return true;
+    } catch(err) {
+        // If something goes wrong, abort the transactions, end the session and throw the error
+        await session.abortTransactions();
+        session.endSession();
+        throw err;
     }
 });
 
@@ -132,10 +148,10 @@ router.post('/delete/:id', isLoggedIn, async (req, res) => {
                 console.log('Document removed!');
             });
 
-            res.redirect('back');
+            res.redirect('/dashboard');
     } catch(err) {
         console.log(err);
-        res.redirect('back');
+        res.redirect('/dashboard');
     }
 });
 
