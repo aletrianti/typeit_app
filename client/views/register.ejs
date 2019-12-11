@@ -1,17 +1,21 @@
 <% include ../components/header %>
 
-<div class="form-container">
+<% include ../components/message %>
+
+<div id="form-container-register" class="form-container">
     <h1>Register</h1>
 
     <form action="/register" method="post">
-        <div class="form-field">
-            <label for="firstName">First name</label>
-            <input type="text" name="firstName" id="first-name" placeholder="Insert your first name">
-        </div>
-
-        <div class="form-field">
-            <label for="lastName">Last name</label>
-            <input type="text" name="lastName" id="last-name" placeholder="Insert your last name">
+        <div id="name-form-field">
+            <div class="form-field">
+                <label for="firstName">First name</label>
+                <input type="text" name="firstName" id="first-name" placeholder="Insert your first name">
+            </div>
+    
+            <div class="form-field">
+                <label for="lastName">Last name</label>
+                <input type="text" name="lastName" id="last-name" placeholder="Insert your last name">
+            </div>
         </div>
 
         <div class="form-field">

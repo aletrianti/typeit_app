@@ -1,6 +1,12 @@
 <div id="app-dashboard-container-create-note-container">
     <form action="/dashboard/notes" method="post" id="app-dashboard-container-create-note">
         <h1>Create a new note</h1>
+
+        <% if(error && error.length > 0){ %>
+            <div class="new-note-error">
+                <%= error %>
+            </div>
+        <% } %>
     
         <div class="form-field create-note-form-field">
             <label for="title">Write a title</label>

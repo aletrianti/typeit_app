@@ -4,6 +4,7 @@ const Category = require("../models/Category");
 const Note = require("../models/Note");
 const User = require("../models/User");
 const moment = require('moment');
+const noteValidation = require("../validation/authValidation").noteValidation;
 
 // Adding this middleware inside of requests used to render routes will make the routes protected
 const isLoggedIn = require("../middleware/isLoggedIn");
@@ -43,19 +44,27 @@ router.get('/:id', isLoggedIn, async (req, res) => {
 // POST request
 // Create a new note
 router.post('/', isLoggedIn, async (req, res) => {
-    // Check if there is already a note with the same title. If there is one, do not allow the user to create it again.
-    const noteTitle = await Note.find({ title: req.body.title }, { 'title': 1, '_id': 0 })
+    // Validate the body of the request and, if there are errors, send the error message
+    const validation = noteValidation.validate(req.body);
+    if (validation.error) {
+        req.flash('error', validation.error.details[0].message);
+        return res.redirect('back');
+    }
+
+    // Check if there is already a note (created by the current user) with the same title. If there is one, do not allow the user to create it again.
+    const noteTitle = await Note.find({ 'author.id': req.user._id, title: req.body.title }, { 'title': 1, '_id': 0 })
         .then((note) => { return note; })
         .catch((err) => { if (err) throw err; });
 
     // Select category name based on the category chosen in the select field
-    const categoryName = await Category.find({ _id: req.body.category }, { 'name': 1, '_id': 0 })
+    const categoryName = await Category.find({ 'author.id': req.user._id, _id: req.body.category }, { 'name': 1, '_id': 0 })
         .then((name) => { return name[0].name; })
         .catch((err) => { if (err) throw err; });
     
     // Create a new note
     // If there are no errors: save the note into the database and redirect the user to '/dashboard'
     if (noteTitle.length !== 0) {
+        req.flash('error', 'Sorry, this note already exists.');
         res.redirect('back');
     } else {
         const newNote = new Note({
@@ -74,6 +83,7 @@ router.post('/', isLoggedIn, async (req, res) => {
 
         newNote.save();
 
+        req.flash('success', 'Your note has been created.');
         res.redirect('/dashboard');
     }
 });
@@ -81,14 +91,21 @@ router.post('/', isLoggedIn, async (req, res) => {
 // POST request
 // Edit a specific note
 router.post('/edit/:id', isLoggedIn, async (req, res) => {
+    // Validate the body of the request and, if there are errors, send the error message
+    const validation = noteValidation.validate(req.body);
+    if (validation.error) {
+        req.flash('error', validation.error.details[0].message);
+        return res.redirect('back');
+    }
+    
     // Start session and transaction
     const session = await User.startSession();
     session.startTransaction();
 
     try {
-        // Check if there is already a note with the same title. 
+        // Check if there is already a note (created by the current user) with the same title. 
         // If there is one, and its id is not the same as the note being edited, do not allow the user to edit the note with that title.
-        const noteTitle = await Note.find({ title: req.body.title, _id: { '$ne': req.params.id } }, { 'title': 1, '_id': 1 })
+        const noteTitle = await Note.find({ 'author.id': req.user._id, title: req.body.title, _id: { '$ne': req.params.id } }, { 'title': 1, '_id': 1 })
             .then((note) => { return note; })
             .catch((err) => { if (err) throw err; });
 
@@ -106,6 +123,7 @@ router.post('/edit/:id', isLoggedIn, async (req, res) => {
         }
 
         if (noteTitle.length !== 0) {
+            req.flash('error', 'Sorry, try a different title.');
             res.redirect('back');
         } else {
             // Find a note with a specific id and update based on the data from the form
@@ -124,6 +142,7 @@ router.post('/edit/:id', isLoggedIn, async (req, res) => {
                 if (err) { console.log(err); }
             });
 
+            req.flash('success', 'Your note has been edited.');
             res.redirect('back');
         }
 
@@ -148,9 +167,10 @@ router.post('/delete/:id', isLoggedIn, async (req, res) => {
                 console.log('Document removed!');
             });
 
+            req.flash('success', 'Your note has been deleted.');
             res.redirect('/dashboard');
     } catch(err) {
-        console.log(err);
+        req.flash('error', 'Your note could not be deleted. Try again.');
         res.redirect('/dashboard');
     }
 });

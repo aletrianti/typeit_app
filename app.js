@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
+const flash = require('connect-flash');
 const passport = require("passport");
 const session = require("express-session");
 const sessionSecret = require("./config/config").sessionSecret;
@@ -24,6 +25,9 @@ require('./config/passport')(passport);
 
 // Require secret keys
 const db = require('./config/dbKeys').mongoURI;
+
+// Use connect-flash to display messages
+app.use(flash());
 
 // Connect to DB
 mongoose
@@ -51,6 +55,8 @@ app.use(passport.session());
 // Local variables
 app.use((req, res, next) => {
     res.locals.loggedInUser = req.user;
+    res.locals.error = req.flash('error');
+    res.locals.success = req.flash('success');
     next();
 });
 

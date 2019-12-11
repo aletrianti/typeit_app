@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const registerValidation = require("../validation/authValidation").registerValidation;
-// const loginValidation = require("../validation/authValidation").loginValidation;
+const loginValidation = require("../validation/authValidation").loginValidation;
 const User = require("../models/User");
 
 // GET request 
@@ -21,13 +21,19 @@ router.get('/register', (req, res) => {
 // POST request 
 // Register a new user to the '/register' route
 router.post('/register', async (req, res, next) => {
-    // Validate the body of the request and, if there are errors, send a 400 status with the error message
+    // Validate the body of the request and, if there are errors, send the error message
     const validation = registerValidation.validate(req.body);
-    if (validation.error) return res.status(400).send({ error: validation.error.details[0].message });
+    if (validation.error) {
+        req.flash('error', validation.error.details[0].message);
+        return res.redirect('/register');
+    }
 
-    // Check if the email already exists and, if it does, send a 400 status with an error message
-    const registeredEmail = await User.findOne({ email: req.body.email })
-    if (registeredEmail) return res.status(400).send({ error: 'Email already registered' });
+    // Check if the email already exists and, if it does, send an error message
+    const registeredEmail = await User.findOne({ email: req.body.email });
+    if (registeredEmail) {
+        req.flash('error', 'Email already registered.');
+        return res.redirect('/register');
+    }
 
     // Encrypt the password
     // First create the salt, then the hash with the password and the salt as parameters
@@ -47,11 +53,12 @@ router.post('/register', async (req, res, next) => {
 
         newUser.save();
 
+        req.flash('success', 'You have been registered! Please log in.');
         res.redirect('/login');
     } catch(err) {
-        // If there are errors: send a 400 status along with an error
-        res.status(400).send(err);
-        res.render('register');
+        // If there are errors: send an error
+        req.flash('error', err);
+        res.redirect('/register');
     }
 });
 
@@ -65,11 +72,34 @@ router.get('/login', (req, res) => {
 // Login with passport for authentication with local strategy
 // If the authentication is successful: redirect to the dashboard
 // If something goes wrong, redirect to the login page
-router.post('/login', (req, res, next) => {
-    passport.authenticate('local', {
-        successRedirect: '/dashboard',
-        failureRedirect: '/login'
-    })(req, res, next);
+router.post('/login', async (req, res, next) => {
+    // Validate the body of the request and, if there are errors, send the error message
+    const validation = loginValidation.validate(req.body);
+    if (validation.error) {
+        req.flash('error', validation.error.details[0].message);
+        return res.redirect('/login');
+    }
+
+    // Check if the email already exists and, if it does not, send an error message
+    const registeredEmail = await User.findOne({ email: req.body.email });
+    if (!registeredEmail) {
+        req.flash('error', 'Wrong credentials. Please, try again.');
+        return res.redirect('/login');
+    }
+
+    // Check if the password corresponds to the hash saved in the database
+    const hashedPassword = await User.findOne({ email: req.body.email }).then((user) => { return user.password });
+    bcrypt.compare(req.body.password, hashedPassword, (err, password) => {
+        if (password) {
+            passport.authenticate('local', {
+                successRedirect: '/dashboard',
+                failureRedirect: '/login'
+            })(req, res, next);
+        } else {
+            req.flash('error', 'Wrong credentials. Please, try again.');
+            return res.redirect('/login');
+        }
+    });
 });
 
 // GET request
@@ -78,6 +108,7 @@ router.post('/login', (req, res, next) => {
 // Redirect to the login page
 router.get('/logout', (req, res) => {
     req.logout();
+    req.flash('success', 'You have been logged out! We hope to see you again soon.');
     res.redirect('/login');
 });
 

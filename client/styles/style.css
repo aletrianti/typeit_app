@@ -47,6 +47,48 @@ body {
     color: rgba(0, 0, 0, 0.3);
 }
 
+.message-wrapper {
+    position: absolute;
+    width: 100vw;
+}
+
+.message-container {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-message,
+.success-message {
+    padding: 1em;
+    border-radius: 15px;
+    border: 1px solid;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    z-index: 1000;
+}
+
+.error-message {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.new-note-error {
+    color: #721c24;
+    margin: 0 1.5em .8em 1.5em;
+    padding: .5em 1em;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    border-radius: 5px;
+}
+
+.success-message {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
 /* Header */
 #app-header {
     display: flex;
@@ -125,6 +167,10 @@ body {
     padding-bottom: 2em;
 }
 
+#form-container-register.form-container {
+    width: 30em;
+}
+
 .form-container h1 {
     text-align: center;
     margin-bottom: 1em;
@@ -133,6 +179,21 @@ body {
     background: #313B41;
     border-radius: 24px 24px 0px 0px;
     color: #fff;
+}
+
+#name-form-field {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#name-form-field .form-field:nth-child(1) {
+    padding-right: 10px;
+}
+
+#name-form-field .form-field:nth-child(2) {
+    padding-left: 10px;
 }
 
 .form-field {
