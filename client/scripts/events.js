@@ -1,62 +1,44 @@
 // events.js
 // Frontend JavaScript file for DOM events
 
-// If the span element with the "add-category" id is clicked, display a form in order to add a category
-function addNewCategory() {
-    const newCategoryForm = document.getElementById("new-category-form");
-
-    newCategoryForm.classList.remove("hidden-category-form");
-}
-
-// Hide the "create category form" by clicking on the element with the "hide-category-form" id
-function hideCategoryForm() {
-    const newCategoryForm = document.getElementById("new-category-form");
-
-    newCategoryForm.classList.add("hidden-category-form");
-}
-
 // If the "share" button is clicked, display a dialog in order to share a note
 function shareNote() {
     const shareNoteDialog = document.getElementById("app-share-note-dialog-container");
 
-    shareNoteDialog.classList.remove("hidden-note-form");
+    shareNoteDialog.classList.remove("hidden-form");
 }
 
 // Hide the "share note dialog" by clicking on the element with the "app-share-note-dialog-container" id
 function hideDialog() {
     const shareNoteDialog = document.getElementById("app-share-note-dialog-container");
 
-    shareNoteDialog.classList.add("hidden-note-form");
+    shareNoteDialog.classList.add("hidden-form");
 }
 
-// Add emails to a list - share note
-// function addEmailToList() {
-    // const ul = document.getElementById("show-emails-list");
-    // let inputValue = document.getElementById("add-participants").value;
+// // If the "delete" icon is clicked, display a dialog in order to delete a note
+// function deleteNote() {
+//     const deleteDialog = document.getElementById("delete-note-form");
 
-    // const li = document.createElement("li");
-    // const text = document.createTextNode(inputValue);
+//     deleteDialog.classList.remove("hidden-form");
+// }
 
-    // li.appendChild(text);
-    // li.classList.add("show-emails-list-items");
+// // If the "delete" icon is clicked, display a dialog in order to delete a category
+// function deleteCategory() {
+//     const deleteDialog = document.getElementById("delete-category-form");
 
-    // let emailArray = [];
+//     deleteDialog.classList.remove("hidden-form");
+// }
 
-    // if (inputValue === "") {
-        // console.log('meh');
-    // } else {
-        // Show the emails in a list
-        // ul.appendChild(li);
+// // Hide the "delete note dialog" by clicking on the element with the cancel button
+// function hideDeleteNoteForm() {
+//     const deleteDialog = document.getElementById("delete-note-form");
 
-        // const list = ul.getElementsByTagName("li");
-        // console.log(list);
-        // for (let item = 0; item < list.length; item++) {
-        //     emailArray.push(i.innerText);
-        //     console.log(i.innerText);
-        // }
-    // }
-    // inputValue = "";
+//     deleteDialog.classList.add("hidden-form");
+// }
 
-    // console.log(emailArray);
+// // Hide the "delete category dialog" by clicking on the element with the cancel button
+// function hideDeleteCategoryForm() {
+//     const deleteDialog = document.getElementById("delete-category-form");
 
+//     deleteDialog.classList.add("hidden-form");
 // }

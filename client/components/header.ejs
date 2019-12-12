@@ -15,10 +15,12 @@
         <header id="app-header">
             <span>Typeit</span>
 
-            <% if(pathname === '/dashboard') { %>
+            <% if (pathname && pathname === '/dashboard') { %>
                 <span>Dashboard</span>
-            <% } else { %>
+            <% } else if(pathname === '/calendar') { %>
                 <span>Calendar</span>
+            <% } else { %>
+                
             <% } %>
 
             <nav id="app-header-nav">

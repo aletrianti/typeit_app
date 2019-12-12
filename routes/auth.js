@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 // GET request 
 // Render the register page
 router.get('/register', (req, res) => {
-    res.render('register');
+    res.render('register', { pathname: '/register' });
 });
 
 // POST request 
@@ -65,7 +65,7 @@ router.post('/register', async (req, res, next) => {
 // GET request 
 // Render the login page
 router.get('/login', (req, res) => {
-    res.render('login');
+    res.render('login', { pathname: '/login' });
 });
 
 // POST request
