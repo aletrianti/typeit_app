@@ -404,19 +404,18 @@ body {
 
 .note-prev,
 .category-prev {
-    font-size: .8em;
-    padding: 15px 30px;
-    cursor: pointer;
-    transition: all .2s ease;
-    color: #fff;
-}
-
-.note-prev,
-.category-prev {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    font-size: .8em;
+    padding: 15px 30px;
+    transition: all .2s ease;
+    color: #fff;
+}
+
+.note-prev {
+    cursor: pointer;
 }
 
 #category-prev-icons {
@@ -433,6 +432,7 @@ body {
     border: none;
     cursor: pointer;
     margin-left: 10px;
+    outline: none;
 }
 
 .note-prev span {

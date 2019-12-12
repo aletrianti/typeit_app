@@ -15,6 +15,12 @@
         <header id="app-header">
             <span>Typeit</span>
 
+            <% if(pathname === '/dashboard') { %>
+                <span>Dashboard</span>
+            <% } else { %>
+                <span>Calendar</span>
+            <% } %>
+
             <nav id="app-header-nav">
                 <ul>
                     <% if (!loggedInUser) { %>
