@@ -41,7 +41,7 @@ router.post('/', isLoggedIn, async (req, res) => {
             newCategory.save();
     
             req.flash('success', 'Your category has been created.');
-            res.redirect('back');
+            res.redirect('/dashboard');
         }
     } catch(err) {
         req.flash('error', 'An error occurred. Please, try again.');
@@ -59,7 +59,7 @@ router.post('/:id', isLoggedIn, async (req, res) => {
     try {
         if (noteCategory.length !== 0) {
             req.flash('error', 'Sorry, this category already exists.');
-            res.redirect('back');
+            res.redirect('/dashboard');
         } else {
             Category.findByIdAndRemove({ _id: req.params.id }, (err) => {
             if (err) { console.log(err); }
@@ -67,7 +67,7 @@ router.post('/:id', isLoggedIn, async (req, res) => {
             });
 
             req.flash('success', 'Your category has been deleted.');
-            res.redirect('back');
+            res.redirect('/dashboard');
         }
     } catch(err) {
         req.flash('error', 'An error occurred. Please, try again.');

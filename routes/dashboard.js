@@ -65,4 +65,33 @@ router.get('/new-note', isLoggedIn, async (req, res) => {
     });
 });
 
+// GET request 
+// Render the dashboard with the "add category" form
+router.get('/new-category', isLoggedIn, async (req, res) => {
+    // Find categories created by the user making the request
+    const categories = await Category.find({ 'author.id': req.user._id });
+
+    // Find notes created by the user making the request
+    // If there are errors, do not show any notes (empty array)
+    // If everything is find, show the notes
+    Note.find({ 'author.id': req.user._id }, (error, notes) => {
+        if (error) {
+            res.render('dashboard/addCategory', { 
+                // "moment" is included in order to format dates on the client side
+                moment: moment, 
+                notes: [], 
+                categories: [], 
+                pathname: '/dashboard' 
+            });
+        } else {
+            res.render('dashboard/addCategory', { 
+                moment: moment, 
+                notes: notes, 
+                categories: categories, 
+                pathname: '/dashboard' 
+            }); 
+        }
+    });
+});
+
 module.exports = router;

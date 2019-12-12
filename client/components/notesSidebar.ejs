@@ -8,7 +8,6 @@
         <% }); %>
     </div>
 
-    <!-- <div id="new-category-form" class="hidden-category-form"> -->
     <span class="sidebar-categories-header">Categories</span>
     
     <div id="categories-list">
@@ -16,18 +15,6 @@
             <% include ./category %>
         <% }); %>
     </div>
-    
-    <div class="sidebar-categories-sub-header">
-        <span>Create a new category</span>
-    </div>
-    
-    <form action="/dashboard/categories" method="post" id="create-category-form">
-        <input type="text" id="new-category-input" placeholder="New category..." name="name">
 
-        <div id="form-btns">
-            <button id="new-category-btn">Create</button>
-            <!-- <span id="cancel-category-btn" onClick="hideCategoryForm()">Cancel</span> -->
-        </div>
-    </form>
-    <!-- </div> -->
+    <a href="/dashboard/new-category" id="create-new-category-btn">Create new <i class="fa fa-plus"></i></a>
 </div>

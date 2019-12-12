@@ -1,0 +1,21 @@
+<div id="app-dashboard-container-create-category-container">
+    <form action="/dashboard/categories" method="post" id="app-dashboard-container-create-category">
+        <h1>Create a new category</h1>
+
+        <% if(error && error.length > 0){ %>
+            <div class="new-category-error">
+                <%= error %>
+            </div>
+        <% } %>
+    
+        <div class="form-field create-category-form-field">
+            <label for="name">Write a title</label>
+            <input type="text" id="new-category-input" placeholder="New category..." name="name">
+        </div>
+    
+        <div id="app-dashboard-container-create-category_buttons">
+            <a id="cancel-category-btn" class="app-dashboard-btns" href="/dashboard">Cancel</a>
+            <button id="save-category-btn" class="app-dashboard-btns">Create</button>
+        </div>
+    </form>
+</div>

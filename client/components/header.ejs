@@ -21,8 +21,7 @@
                         <li><a href="/register">Register</a></li>
                         <li><a href="/login">Login</a></li>
                     <% } else { %>
-                        <li id="link-user-name"><a href="#"><%= loggedInUser.firstName + ' ' + loggedInUser.lastName %></a></li>
-                        <li><a href='/logout'>Logout</a></li>
+                        <li id="link-user-name"><a>Hi, <span><%= loggedInUser.firstName + ' ' + loggedInUser.lastName %></span></a></li>
                     <% } %>
                 </ul>
             </nav>

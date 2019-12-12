@@ -32,7 +32,8 @@ body {
     right: -20em;
 }
 
-#app-dashboard-initial-text {
+#app-dashboard-initial-text,
+#app-calendar-initial-text {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -40,7 +41,8 @@ body {
     width: calc(100vw - 274px);
 }
 
-#app-dashboard-initial-text span {
+#app-dashboard-initial-text span,
+#app-calendar-initial-text span {
     font-size: 1.5em;
     text-align: center;
     width: 100%;
@@ -74,7 +76,8 @@ body {
     border-color: #f5c6cb;
 }
 
-.new-note-error {
+.new-note-error,
+.new-category-error {
     color: #721c24;
     margin: 0 1.5em .8em 1.5em;
     padding: .5em 1em;
@@ -150,8 +153,12 @@ body {
     border-bottom: 3px solid #fff;
 }
 
-#link-user-name {
+/* #link-user-name {
     border-right: 1px solid rgba(251, 251, 251, 0.342);
+} */
+
+#link-user-name a span {
+    padding-left: 2px;
 }
 
 /* Forms */
@@ -245,7 +252,8 @@ body {
 
 /* Dashboard */
 
-#app-dashboard {
+#app-dashboard,
+#app-calendar {
     display: flex;
     flex-direction: row;
 }
@@ -480,7 +488,27 @@ body {
     overflow-y: auto;
 }
 
-#create-category-form {
+#create-new-category-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    font-size: .8em;
+    margin: 5px 30px 15px;
+    padding: 1em;
+    cursor: pointer;
+    transition: all .2s ease;
+    color: #fff;
+    background-color: #2B876F;
+    border: none;
+    border-radius: 5px;
+}
+
+#create-new-category-btn i {
+    margin-left: 10px;
+}
+
+/* #create-category-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -518,7 +546,6 @@ body {
 #new-category-btn {
     background: #2B876F;
     color: #fff;
-    /* margin-right: 10px; */
 }
 
 #cancel-category-btn {
@@ -528,11 +555,12 @@ body {
 
 .hidden-category-form {
     display: none;
-}
+} */
 
-/* -- Dashboard: Note Form -- */
+/* -- Dashboard: Forms -- */
 
-#app-dashboard-container-create-note-container {
+#app-dashboard-container-create-note-container,
+#app-dashboard-container-create-category-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -541,14 +569,16 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-#app-dashboard-container-create-note {
+#app-dashboard-container-create-note,
+#app-dashboard-container-create-category {
     width: 25em;
     padding-bottom: 1.5em;
     background-color: #FBFBFB;
     box-shadow: 4px 0px 30px rgba(0, 0, 0, 0.25);
 }
 
-#app-dashboard-container-create-note h1 {
+#app-dashboard-container-create-note h1,
+#app-dashboard-container-create-category h1 {
     font-size: 1.6em;
     text-align: center;
     margin-bottom: .8em;
@@ -558,6 +588,7 @@ body {
 }
 
 .create-note-form-field,
+.create-category-form-field,
 .share-note-form-field,
 #show-emails,
 #app-share-note-dialog_buttons,
@@ -566,12 +597,14 @@ body {
 }
 
 .create-note-form-field label,
+.create-category-form-field label,
 .share-note-form-field label {
     padding-left: .5em;
     margin-bottom: .5em;
 }
 
 .create-note-form-field select,
+.create-category-form-field select,
 .share-note-form-field select {
     width: 100%;
 }
@@ -611,6 +644,7 @@ body {
 }
 
 #app-dashboard-container-create-note_buttons,
+#app-dashboard-container-create-category_buttons,
 #app-dashboard-container-edit-note_buttons {
     display: flex;
     flex-direction: row;
@@ -618,13 +652,15 @@ body {
     justify-content: flex-end;
 }
 
-#app-dashboard-container-create-note_buttons {
+#app-dashboard-container-create-note_buttons,
+#app-dashboard-container-create-category_buttons {
     justify-content: space-around;
     margin-top: .5em;
     padding: 0 3em;
 }
 
 #app-dashboard-container-create-note_buttons .app-dashboard-btns,
+#app-dashboard-container-create-category_buttons .app-dashboard-btns,
 #app-dashboard-container-edit-note_buttons .app-dashboard-btns,
 #app-share-note-dialog_buttons .share-note-btns,
 #add-note-btn {
@@ -636,11 +672,13 @@ body {
 }
 
 #app-dashboard-container-create-note_buttons .app-dashboard-btns,
+#app-dashboard-container-create-category_buttons .app-dashboard-btns,
 #app-share-note-dialog_buttons .share-note-btns {
     padding: 10px 30px;
 }
 
 #app-dashboard-container-create-note_buttons #save-note-btn,
+#app-dashboard-container-create-category_buttons #save-category-btn,
 #app-dashboard-container-edit-note_buttons #save-note-btn,
 #app-share-note-dialog_buttons #save-note-btn {
     background-color: #2B876F;
@@ -648,7 +686,7 @@ body {
     border: 1px solid #2B876F;
 }
 
-#app-dashboard-container-edit-note_buttons #share-note-btn {
+#app-dashboard-container-edit-note_buttons #share-category-btn {
     background-color: #313B41;
     color: #FBFBFB;
     border: 1px solid #313B41;
@@ -656,11 +694,13 @@ body {
 
 #app-dashboard-container-edit-note_buttons #save-note-btn,
 #app-dashboard-container-edit-note_buttons #share-note-btn,
-#app-dashboard-container-create-note_buttons #cancel-note-btn {
+#app-dashboard-container-create-note_buttons #cancel-note-btn,
+#app-dashboard-container-create-category_buttons #cancel-category-btn {
     margin-right: 10px;
 }
 
 #app-dashboard-container-create-note_buttons #cancel-note-btn,
+#app-dashboard-container-create-category_buttons #cancel-category-btn,
 #app-dashboard-container-edit-note_buttons #cancel-note-btn,
 #app-share-note-dialog_buttons #cancel-note-btn {
     border: 1px solid rgba(49, 59, 65, 0.5);
@@ -854,5 +894,10 @@ body {
     margin: 1em;
     text-align: center;
     opacity: .7;
+}
+
+/* Calendar */
+#app-calendar-initial-text {
+    width: calc(100vw - 68px);
 }
 

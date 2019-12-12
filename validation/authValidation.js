@@ -16,11 +16,12 @@ const loginValidation = Joi.object({
 
 const noteValidation = Joi.object({
     title: Joi.string().required().label('Title'),
-    category: Joi.any().required().label('Category')
+    category: Joi.any().required().label('Category'),
+    body: Joi.string().label('Description')
 });
 
 const categoryValidation = Joi.object({
-    name: Joi.string().email().required().label('Name')
+    name: Joi.string().required().label('Name')
 });
 
 module.exports.registerValidation = registerValidation;
