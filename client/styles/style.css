@@ -159,6 +159,7 @@ body {
 
 #link-user-name a span {
     padding-left: 2px;
+    cursor: pointer;
 }
 
 /* Forms */
@@ -715,27 +716,33 @@ body {
     padding: 1em 0;
 }
 
-#app-dashboard-container-edit-note_header_date {
-    display: flex;
-    flex-direction: column;
-    font-size: .8em;
-    margin-right: 1em;
-    padding-right: 1em;
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-#app-dashboard-container-edit-note_header_category {
+#app-dashboard-container-edit-note_header_category,
+#app-dashboard-container-edit-note_header_participants {
     display: flex;
     align-items: center;
     flex-direction: row;
-    font-size: .8em;
+    font-size: 14px;
+} 
+
+#app-dashboard-container-edit-note_header_participants #note-participants .note-participant {
+    border: 1px solid #313B41;
+    border-radius: 5px;
+    background-color: #fff;
+    outline: none;
+    color: #313B41;
+    margin-right: 5px;
+    padding: .5em 1em;
+}
+
+#app-dashboard-container-edit-note_header_participants #note-participants .note-participant:first-of-type {
+    margin-left: 5px;
 }
 
 #select-category {
     margin-right: 1em;
     padding: 5px 10px;
     border-radius: 5px;
-    font-size: .9em;
+    font-size: 1em;
     outline: none;
 }
 

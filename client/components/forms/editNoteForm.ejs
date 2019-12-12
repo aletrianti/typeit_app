@@ -11,11 +11,7 @@
         <input type="text" name="title" id="note-title" value="<%= note.title %>">
 
         <div id="app-dashboard-container-edit-note_header_options">
-            <!-- <div id="app-dashboard-container-edit-note_header_date">
-                <span id="note-creation-date">Created on: DATE HERE</span>
-            </div> -->
-
-            <div id="app-dashboard-container-create-note_header_category">
+            <div id="app-dashboard-container-edit-note_header_category">
                 <% if(categories !== []) { %>
                     <select name="category" id="select-category">
                         <option selected hidden value="<%= note.category._id %>"><%= note.category.name %></option>
@@ -23,10 +19,16 @@
                             <option value="<%= category._id %>"><%= category.name %></option>
                         <% }); %>
                     </select>
-                <% } %>      
-                <!-- <span id="add-category-btn" onClick="addNewCategory()">
-                    <i class="fa fa-plus"></i>
-                </span>     -->
+                <% } %>
+            </div>
+            <div id="app-dashboard-container-edit-note_header_participants">
+                <% if (note.participants !== []) { %>
+                    <span id="note-participants"> Shared with: 
+                    <% note.participants.forEach(function(participant) { %>
+                        <span class="note-participant"><%= participant.firstName %> <%= participant.lastName %></span>
+                    <% }); %>
+                    </span>
+                <% } %>
             </div>
         </div>
     </div>

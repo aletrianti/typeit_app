@@ -19,7 +19,7 @@ router.get('/:id', isLoggedIn, async (req, res) => {
     // Find note created by the user making the request based on the note id
     // If there are errors, do not show any notes (empty array)
     // If everything is find, show the note
-    Note.findById(req.params.id, function(error, note) {
+    Note.findById(req.params.id, (error, note) => {
         if (error) {
             res.render('dashboard/editNote', { 
                 moment: moment, 
@@ -185,44 +185,54 @@ router.post('/share-note/:id', isLoggedIn, async (req, res) => {
     const splitWithoutSpace = inputBody.split(',');
 
     let userEmail;
+    let userEmails = [];
+    let invitedUsers = [];
 
-    if (inputBody.includes(', ') === true) {
-        splitWithSpace.forEach((i) => {
-            userEmail = i;
-            console.log(userEmail);
-        });
-    } else if (inputBody.includes(',') === true) {
-        splitWithoutSpace.forEach((i) => {
-            userEmail = i;
-            console.log(userEmail);
-        });
-    } else {
-        userEmail = req.body.emails;
+    try {
+        if (inputBody.includes(', ') === true) {
+            splitWithSpace.forEach((i) => {
+                userEmail = i;
+                userEmails.push(userEmail);
+            });
+        } else if (inputBody.includes(',') === true) {
+            splitWithoutSpace.forEach((i) => {
+                userEmail = i;
+                userEmails.push(userEmail);
+            });
+        } else {
+            userEmail = req.body.emails;
+            userEmails.push(userEmail);
+        }
+    
+        for (const mail of userEmails) {
+            // Find user with the email specified
+            await User.find({ email: mail })
+                .then((users) => {
+                    for (user of users) {
+                        invitedUsers.push(user);
+                    }
+                })
+                .catch((err) => { if (err) throw err; });
+        }
+    } catch(err) {
+        console.log(err);
     }
-
-    // Find user with the email specified
-    const invitedUser = await User.find({ email: userEmail })
-        .then((user) => { console.log(user); return user; })
-        .catch((err) => { if (err) throw err; });
 
     // Find a note with a specific id and update based on the data from the share-note form
     Note.findOneAndUpdate({ _id: req.params.id }, {
-        $set: {
-            participants: [
-                {
-                    id: invitedUser._id,
-                    email: invitedUser.email,
-                    firstName: invitedUser.firstName,
-                    lastName: invitedUser.lastName
-                }
-            ]
+            $set: {
+                participants: invitedUsers
+            }
+        }, 
+        { new: true }, // Return the newly updated version of the document
+        (err, note) => { 
+            if (err) { 
+                req.flash('error', 'An error occurred. Try again.');
+            }
         }
-    }, 
-    { new: true }, // Return the newly updated version of the document
-    (err, note) => {
-        if (err) { console.log(err); }
-    });
+    );
 
+    req.flash('success', 'Invitations sent!');
     res.redirect('back');
 });
 

@@ -14,8 +14,8 @@ router.get('/', isLoggedIn, async (req, res) => {
     const categories = await Category.find({ 'author.id': req.user._id });
 
     // Find notes created by the user making the request
-    // If there are errors, do not show any notes (empty array)
-    // If everything is find, show the notes
+    // If there are errors, do not show any notes or categories(empty array)
+    // If everything is find, show the notes and categories
     Note.find({ 'author.id': req.user._id }, (error, notes) => {
         if (error) {
             res.render('dashboard', { 
@@ -34,6 +34,7 @@ router.get('/', isLoggedIn, async (req, res) => {
             }); 
         }
     });
+
 });
 
 // GET request 
