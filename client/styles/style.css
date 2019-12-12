@@ -411,18 +411,19 @@ body {
     color: #fff;
 }
 
-.note-prev {
+.note-prev,
+.category-prev {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
-.category-prev {
+#category-prev-icons {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    cursor: default;
 }
 
 .category-prev button,
@@ -431,6 +432,7 @@ body {
     color: #fff;
     border: none;
     cursor: pointer;
+    margin-left: 10px;
 }
 
 .note-prev span {
@@ -686,7 +688,7 @@ body {
     border: 1px solid #2B876F;
 }
 
-#app-dashboard-container-edit-note_buttons #share-category-btn {
+#app-dashboard-container-edit-note_buttons #share-note-btn {
     background-color: #313B41;
     color: #FBFBFB;
     border: 1px solid #313B41;

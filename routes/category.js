@@ -49,6 +49,74 @@ router.post('/', isLoggedIn, async (req, res) => {
     }
 });
 
+// GET request
+// Get a specific category
+router.get('/:id', isLoggedIn, async (req, res) => {
+    // Find categories and notes created by the user making the request
+    const categories = await Category.find({ 'author.id': req.user._id });
+    const notes = await Note.find({ 'author.id': req.user._id });
+
+    // Find category created by the user making the request based on the category id
+    // If there are errors, do not show any categories (empty array)
+    // If everything is find, show the category
+    Category.findById(req.params.id, function(error, category) {
+        if (error) {
+            res.render('dashboard/editCategory', { 
+                moment: moment, 
+                category: category, 
+                notes: [], 
+                categories: [], 
+                pathname: '/dashboard' 
+            });
+        } else {
+            res.render('dashboard/editCategory', { 
+                // "moment" is included in order to format dates on the client side
+                moment: moment, 
+                category: category, 
+                notes: notes, 
+                categories: categories, 
+                pathname: '/dashboard' 
+            }); 
+        }
+    });
+});
+
+// POST request
+// Edit a specific category
+router.post('/:id', isLoggedIn, async (req, res) => {
+    // Validate the body of the request and, if there are errors, send the error message
+    const validation = categoryValidation.validate(req.body);
+    if (validation.error) {
+        req.flash('error', validation.error.details[0].message);
+        return res.redirect('back');
+    }
+
+    // Check if there is already a category (created by the current user) with the same name. 
+    // If there is one, and its id is not the same as the category being edited, do not allow the user to edit the category with that name.
+    const categoryName = await Note.find({ 'author.id': req.user._id, name: req.body.name, _id: { '$ne': req.params.id } }, { 'name': 1, '_id': 1 })
+        .then((category) => { return category; })
+        .catch((err) => { if (err) throw err; });
+
+    if (categoryName.length !== 0) {
+        req.flash('error', 'Sorry, try a different name.');
+        res.redirect('back');
+    } else {
+        // Find a category with a specific id and update based on the data from the form
+        Category.findOneAndUpdate({ _id: req.params.id }, {
+            $set: {
+                name: req.body.name
+            }
+        }, 
+        { new: true }, // Return the newly updated version of the document
+        (err, category) => {
+            if (err) { console.log(err); }
+        });
+
+        req.flash('success', 'Your category has been edited.');
+        res.redirect('back');
+    }
+});
+
 // POST request
 // Delete a category
 router.post('/:id', isLoggedIn, async (req, res) => {
