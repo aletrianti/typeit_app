@@ -1,5 +1,5 @@
 <div id="app-dashboard-container-create-category-container">
-    <form action="/dashboard/categories/<%= category._id %>?_method=put" method="post" id="app-dashboard-container-create-category">
+    <form action="/dashboard/categories/<%= category._id %>/edit?_method=put" method="post" id="app-dashboard-container-create-category">
         <h1>Edit a category</h1>
 
         <% if(error && error.length > 0){ %>

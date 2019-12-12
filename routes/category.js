@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Category = require("../models/Category");
+const Note = require("../models/Note");
 const moment = require('moment');
 const categoryValidation = require("../validation/authValidation").categoryValidation;
 
@@ -83,7 +84,7 @@ router.get('/:id', isLoggedIn, async (req, res) => {
 
 // POST request
 // Edit a specific category
-router.post('/:id', isLoggedIn, async (req, res) => {
+router.post('/:id/edit', isLoggedIn, async (req, res) => {
     // Validate the body of the request and, if there are errors, send the error message
     const validation = categoryValidation.validate(req.body);
     if (validation.error) {
@@ -93,7 +94,7 @@ router.post('/:id', isLoggedIn, async (req, res) => {
 
     // Check if there is already a category (created by the current user) with the same name. 
     // If there is one, and its id is not the same as the category being edited, do not allow the user to edit the category with that name.
-    const categoryName = await Note.find({ 'author.id': req.user._id, name: req.body.name, _id: { '$ne': req.params.id } }, { 'name': 1, '_id': 1 })
+    const categoryName = await Category.find({ 'author.id': req.user._id, name: req.body.name, _id: { '$ne': req.params.id } }, { 'name': 1, '_id': 1 })
         .then((category) => { return category; })
         .catch((err) => { if (err) throw err; });
 
@@ -112,6 +113,32 @@ router.post('/:id', isLoggedIn, async (req, res) => {
             if (err) { console.log(err); }
         });
 
+        // Change the category's name inside notes, if used
+        try {
+            const noteCategory = await Note.find({ 'author.id': req.user._id, 'category.id': req.params.id })
+                .then((notes) => { return notes; })
+                .catch((err) => { if (err) throw err; });
+
+            // console.log(noteCategory);
+
+            noteCategory.forEach((note) => {
+                console.log('Note: ' + note);
+                console.log('Note title: ' + note.title);
+                Note.findOneAndUpdate({ _id: note._id }, {
+                    $set: {
+                        category: { 
+                            name: req.body.name 
+                        }
+                    }
+                }, { new: true }, 
+                (err, note) => {
+                    if (err) { console.log(err); }
+                });
+            });
+        } catch(err) {
+            console.log(err);
+        }
+
         req.flash('success', 'Your category has been edited.');
         res.redirect('back');
     }
@@ -119,14 +146,14 @@ router.post('/:id', isLoggedIn, async (req, res) => {
 
 // POST request
 // Delete a category
-router.post('/:id', isLoggedIn, async (req, res) => {
+router.post('/:id/delete', isLoggedIn, async (req, res) => {
     const noteCategory = await Note.find({ 'author.id': req.user._id, 'category.id': req.params.id })
         .then((note) => { return note; })
         .catch((err) => { if (err) throw err; });
 
     try {
         if (noteCategory.length !== 0) {
-            req.flash('error', 'Sorry, this category already exists.');
+            req.flash('error', 'Sorry, this category is currently being used in a note.');
             res.redirect('/dashboard');
         } else {
             Category.findByIdAndRemove({ _id: req.params.id }, (err) => {
