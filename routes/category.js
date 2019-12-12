@@ -114,19 +114,16 @@ router.post('/:id/edit', isLoggedIn, async (req, res) => {
         });
 
         // Change the category's name inside notes, if used
-        try {
-            const noteCategory = await Note.find({ 'author.id': req.user._id, 'category.id': req.params.id })
-                .then((notes) => { return notes; })
-                .catch((err) => { if (err) throw err; });
+        const noteCategory = await Note.find({ 'author.id': req.user._id, 'category.id': req.params.id })
+            .then((notes) => { return notes; })
+            .catch((err) => { if (err) throw err; });
 
-            // console.log(noteCategory);
-
+        if (noteCategory.length !== 0) {
             noteCategory.forEach((note) => {
-                console.log('Note: ' + note);
-                console.log('Note title: ' + note.title);
                 Note.findOneAndUpdate({ _id: note._id }, {
                     $set: {
                         category: { 
+                            id: req.params.id,
                             name: req.body.name 
                         }
                     }
@@ -134,9 +131,7 @@ router.post('/:id/edit', isLoggedIn, async (req, res) => {
                 (err, note) => {
                     if (err) { console.log(err); }
                 });
-            });
-        } catch(err) {
-            console.log(err);
+            });   
         }
 
         req.flash('success', 'Your category has been edited.');

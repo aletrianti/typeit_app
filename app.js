@@ -32,7 +32,12 @@ app.use(flash());
 // Connect to DB
 mongoose
     // Connects to the database with the key specified in config/dbKeys.js
-    .connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+    .connect(db, { 
+        useNewUrlParser: true, 
+        useUnifiedTopology: true, 
+        useCreateIndex: true,
+        useFindAndModify: false
+    })
     // Connects and shows "Connected to db" in the console
     .then(() => console.log('Connected to db'))
     // If there is an error, it gets displayed in the console
