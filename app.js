@@ -79,17 +79,6 @@ app.use('/dashboard/notes', noteRoutes);
 app.use('/dashboard/categories', categoryRoutes);
 app.use('/calendar', calendarRoutes);
 
-// Serve static assets in production
-if (process.env.NODE_ENV === 'production') {
-    // Set the "build" folder as the static folder to use in production
-    app.use(express.static('client/build'));
-
-    // Set "index.ejs" as the index page in production
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index'));
-    });
-}
-
 // Start the server on a specific port OR on port 3000 and show a message in the console
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
