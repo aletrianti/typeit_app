@@ -181,21 +181,25 @@ router.post('/share-note/:id', isLoggedIn, async (req, res) => {
     // If more than one email was written, split the array and iterate over it to get the emails separately
     // If there is just one, userEmail = req.body.emails
     const inputBody = req.body.emails;
-    const splitWithSpace = inputBody.split(', ');
-    const splitWithoutSpace = inputBody.split(',');
-
+    let inputBodyArray;
     let userEmail;
     let userEmails = [];
     let invitedUsers = [];
 
+    // If inputBody is an array and contains spaces, remove them and split the array
+    // Otherwise, just split the array
+    if (inputBody.includes(' ') === true) {
+        const inputBodyNoSpaces = inputBody.replace(/\s/g, '');
+        inputBodyArray = inputBodyNoSpaces.split(',');
+    } else {
+        inputBodyArray = inputBody.split(',');
+    }
+
     try {
-        if (inputBody.includes(', ') === true) {
-            splitWithSpace.forEach((i) => {
-                userEmail = i;
-                userEmails.push(userEmail);
-            });
-        } else if (inputBody.includes(',') === true) {
-            splitWithoutSpace.forEach((i) => {
+        // If more than one email was sent, loop through the original array and push the emails to the userEmails array
+        // Otherwise just push the email to the userEmails array
+        if (inputBodyArray.length > 0) {
+            inputBodyArray.forEach((i) => {
                 userEmail = i;
                 userEmails.push(userEmail);
             });
@@ -204,8 +208,8 @@ router.post('/share-note/:id', isLoggedIn, async (req, res) => {
             userEmails.push(userEmail);
         }
     
+        // Loop through the userEmails array and find users with the emails specified
         for (const mail of userEmails) {
-            // Find user with the email specified
             await User.find({ email: mail })
                 .then((users) => {
                     for (user of users) {
@@ -220,7 +224,7 @@ router.post('/share-note/:id', isLoggedIn, async (req, res) => {
 
     // Find a note with a specific id and update based on the data from the share-note form
     Note.findOneAndUpdate({ _id: req.params.id }, {
-            $set: {
+            $addToSet: {
                 participants: invitedUsers
             }
         }, 
