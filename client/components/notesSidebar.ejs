@@ -1,20 +1,29 @@
-<div id="app-notes-sidebar">
-    <!-- TODO: Add a filter functionality -->
-    <span class="sidebar-notes-header">Notes</span>
+<div id="app-note-sidebar-menu" onClick="openSidebarMenu()">
+    <i class="fas fa-bars fa-lg"></i>
+</div>
 
-    <div id="notes-list">
-        <% notes.forEach(function(note) { %>
-            <% include ./note %>
-        <% }); %>
-    </div>
+<div id="app-notes-sidebar-wrapper">
+    <div id="app-notes-sidebar">
+        <div id="app-note-sidebar-close">
+            <i class="fas fa-times fa-lg" onClick="closeSidebarMenu()"></i>
+        </div>
 
-    <span class="sidebar-categories-header">Categories</span>
+        <span class="sidebar-notes-header">Notes</span>
     
-    <div id="categories-list">
-        <% categories.forEach(function(category) { %>
-            <% include ./category %>
-        <% }); %>
+        <div id="notes-list">
+            <% notes.forEach(function(note) { %>
+                <% include ./note %>
+            <% }); %>
+        </div>
+    
+        <span class="sidebar-categories-header">Categories</span>
+        
+        <div id="categories-list">
+            <% categories.forEach(function(category) { %>
+                <% include ./category %>
+            <% }); %>
+        </div>
+    
+        <a href="/dashboard/new-category" id="create-new-category-btn">Create new <i class="fa fa-plus"></i></a>
     </div>
-
-    <a href="/dashboard/new-category" id="create-new-category-btn">Create new <i class="fa fa-plus"></i></a>
 </div>

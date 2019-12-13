@@ -1,0 +1,86 @@
+@media all and (max-width: 850px) {
+    #app-notes-sidebar-wrapper {
+        display: none;
+    }
+
+    #app-dashboard-initial-text, #app-calendar-initial-text {
+        width: calc(100vw - 101px);
+    }
+
+    #app-note-sidebar-menu {
+        display: block;
+        padding: .5em .8em;
+        position: absolute;
+        top: 95px;
+        left: 68px;
+        background: #fff;
+        color: #313B41;
+        border: 1px solid #313B41;
+        border-radius: 5px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        cursor: pointer;
+        z-index: 1000;
+    }
+
+    #app-note-sidebar-close {
+        display: block;
+        padding: 1em;
+        color: #fff;
+        z-index: 2000;
+    }
+
+    #app-note-sidebar-close i {
+        float: right;
+        cursor: pointer;
+    }
+
+    #app-dashboard-container-edit-note_header_options {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    #app-dashboard-container-edit-note_header_category, 
+    #app-dashboard-container-edit-note_header_participants-mobile {
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+
+    #app-dashboard-container-edit-note_header_participants-desktop-wrapper {
+        display: none;
+    }
+    
+    #app-dashboard-container-edit-note_header_participants-mobile-wrapper {
+        display: block;
+    }
+
+    .rotated-icon {
+        transform: rotate(180deg);
+    }
+
+    #list-participants-button {
+        margin-left: 10px;
+        background: #fff;
+        color: #313B41;
+        border: 1px solid #313B41;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: .1em .4em;
+    }
+
+    #show-participants-list {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+        background: #fff;
+        color: #313B41;
+        border: 1px solid #313B41;
+        border-radius: 5px;
+    }
+
+    .note-participant {
+        padding: .5em 1em;
+        border-bottom: .5px solid rgba(49, 59, 65, 0.5);
+    }
+}

@@ -21,14 +21,32 @@
                     </select>
                 <% } %>
             </div>
-            <div id="app-dashboard-container-edit-note_header_participants">
-                <% if (note.participants !== []) { %>
-                    <span id="note-participants"> Shared with: 
-                    <% note.participants.forEach(function(participant) { %>
-                        <span class="note-participant"><%= participant.firstName %> <%= participant.lastName %></span>
-                    <% }); %>
-                    </span>
-                <% } %>
+            <div id="app-dashboard-container-edit-note_header_participants-desktop-wrapper">
+                <div id="app-dashboard-container-edit-note_header_participants-desktop">
+                    <% if (note.participants !== []) { %>
+                        <span id="note-participants"> Shared with: 
+                        <% note.participants.forEach(function(participant) { %>
+                            <span class="note-participant"><%= participant.firstName %> <%= participant.lastName %></span>
+                        <% }); %>
+                        </span>
+                    <% } %>
+                </div>
+            </div>
+            <div id="app-dashboard-container-edit-note_header_participants-mobile-wrapper">
+                <div id="app-dashboard-container-edit-note_header_participants-mobile">
+                    <% if (note.participants !== []) { %>
+                        <span id="note-participants"> Shared with: 
+                            <span id="list-participants-button" onClick="toggleParticipantsList()">
+                                <i class="fas fa-angle-down" id="list-participants-button-icon"></i>
+                            </span>
+                        </span>
+                        <div id="show-participants-list" class="hidden">
+                            <% note.participants.forEach(function(participant) { %>
+                                <span class="note-participant"><%= participant.firstName %> <%= participant.lastName %></span>
+                            <% }); %>
+                        </div>
+                    <% } %>
+                </div>
             </div>
         </div>
     </div>
