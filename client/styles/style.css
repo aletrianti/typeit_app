@@ -365,6 +365,10 @@ body {
     transition: all .2s ease;
 }
 
+.sidebar-notes-header:nth-child(2) {
+    margin-top: .5em;
+}
+
 .sidebar-add-new-text:nth-child(1) {
     border-bottom: 1px solid rgba(43, 135, 110, 0.5);
 }
