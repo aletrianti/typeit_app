@@ -15,6 +15,7 @@ router.get('/:id', isLoggedIn, async (req, res) => {
     // Find categories created by the user making the request
     const categories = await Category.find({ 'author.id': req.user._id });
     const notes = await Note.find({ 'author.id': req.user._id });
+    const sharedNotes = await Note.find({ participants: { '$elemMatch': { _id: req.user._id } } });
 
     // Find note created by the user making the request based on the note id
     // If there are errors, do not show any notes (empty array)
@@ -25,6 +26,7 @@ router.get('/:id', isLoggedIn, async (req, res) => {
                 moment: moment, 
                 note: note, 
                 notes: [], 
+                sharedNotes: [],
                 categories: [], 
                 pathname: '/dashboard' 
             });
@@ -34,6 +36,7 @@ router.get('/:id', isLoggedIn, async (req, res) => {
                 moment: moment, 
                 note: note, 
                 notes: notes, 
+                sharedNotes: sharedNotes,
                 categories: categories, 
                 pathname: '/dashboard' 
             }); 

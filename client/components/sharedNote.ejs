@@ -1,0 +1,10 @@
+<a class="note-prev" href="/dashboard/notes/<%= sharedNote._id %>">
+    <div class="note-prev-info">
+        <span class="title-span"><%= sharedNote.title %></span> <br>
+        <span><%= sharedNote.category.name %> - <%= moment(sharedNote.createdAt).calendar() %></span> <br>
+        <span><%= sharedNote.author.firstName %> <%= sharedNote.author.lastName %></span>
+    </div>
+    <form action="/dashboard/notes/delete/<%= sharedNote._id %>?_method=delete" method="post">
+        <button><i class="fas fa-trash-alt"></i></button>
+    </form>
+</a>

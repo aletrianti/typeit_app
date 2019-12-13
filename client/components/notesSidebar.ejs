@@ -8,15 +8,23 @@
             <i class="fas fa-times fa-lg" onClick="closeSidebarMenu()"></i>
         </div>
 
-        <span class="sidebar-notes-header">Notes</span>
+        <span class="sidebar-notes-header">My notes</span>
     
         <div id="notes-list">
             <% notes.forEach(function(note) { %>
                 <% include ./note %>
             <% }); %>
         </div>
+
+        <span class="sidebar-notes-header">Shared notes</span>
     
-        <span class="sidebar-categories-header">Categories</span>
+        <div id="notes-list">
+            <% sharedNotes.forEach(function(sharedNote) { %>
+                <% include ./sharedNote %>
+            <% }); %>
+        </div>
+    
+        <span class="sidebar-categories-header">My categories</span>
         
         <div id="categories-list">
             <% categories.forEach(function(category) { %>

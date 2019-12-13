@@ -12,6 +12,8 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 router.get('/', isLoggedIn, async (req, res) => {
     // Find categories created by the user making the request
     const categories = await Category.find({ 'author.id': req.user._id });
+    // Find notes that include the current user as a participant
+    const sharedNotes = await Note.find({ participants: { '$elemMatch': { _id: req.user._id } } });
 
     // Find notes created by the user making the request
     // If there are errors, do not show any notes or categories(empty array)
@@ -22,6 +24,7 @@ router.get('/', isLoggedIn, async (req, res) => {
                 // "moment" is included in order to format dates on the client side
                 moment: moment, 
                 notes: [], 
+                sharedNotes: [],
                 categories: [], 
                 pathname: '/dashboard' 
             });
@@ -29,6 +32,7 @@ router.get('/', isLoggedIn, async (req, res) => {
             res.render('dashboard', { 
                 moment: moment, 
                 notes: notes, 
+                sharedNotes: sharedNotes,
                 categories: categories, 
                 pathname: '/dashboard' 
             }); 
@@ -42,6 +46,8 @@ router.get('/', isLoggedIn, async (req, res) => {
 router.get('/new-note', isLoggedIn, async (req, res) => {
     // Find categories created by the user making the request
     const categories = await Category.find({ 'author.id': req.user._id });
+    // Find notes that include the current user as a participant
+    const sharedNotes = await Note.find({ participants: { '$elemMatch': { _id: req.user._id } } });
 
     // Find notes created by the user making the request
     // If there are errors, do not show any notes (empty array)
@@ -52,6 +58,7 @@ router.get('/new-note', isLoggedIn, async (req, res) => {
                 // "moment" is included in order to format dates on the client side
                 moment: moment, 
                 notes: [], 
+                sharedNotes: [],
                 categories: [], 
                 pathname: '/dashboard' 
             });
@@ -59,6 +66,7 @@ router.get('/new-note', isLoggedIn, async (req, res) => {
             res.render('dashboard/addNote', { 
                 moment: moment, 
                 notes: notes, 
+                sharedNotes: sharedNotes,
                 categories: categories, 
                 pathname: '/dashboard' 
             }); 
@@ -71,6 +79,8 @@ router.get('/new-note', isLoggedIn, async (req, res) => {
 router.get('/new-category', isLoggedIn, async (req, res) => {
     // Find categories created by the user making the request
     const categories = await Category.find({ 'author.id': req.user._id });
+    // Find notes that include the current user as a participant
+    const sharedNotes = await Note.find({ participants: { '$elemMatch': { _id: req.user._id } } });
 
     // Find notes created by the user making the request
     // If there are errors, do not show any notes (empty array)
@@ -81,6 +91,7 @@ router.get('/new-category', isLoggedIn, async (req, res) => {
                 // "moment" is included in order to format dates on the client side
                 moment: moment, 
                 notes: [], 
+                sharedNotes: [],
                 categories: [], 
                 pathname: '/dashboard' 
             });
@@ -88,6 +99,7 @@ router.get('/new-category', isLoggedIn, async (req, res) => {
             res.render('dashboard/addCategory', { 
                 moment: moment, 
                 notes: notes, 
+                sharedNotes: sharedNotes,
                 categories: categories, 
                 pathname: '/dashboard' 
             }); 
