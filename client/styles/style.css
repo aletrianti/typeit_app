@@ -357,16 +357,13 @@ body {
 }
 
 .sidebar-add-new-text,
-.sidebar-notes-header {
+.sidebar-notes-header,
+.sidebar-other-notes-header {
     padding: 15px 30px;
     font-size: .8em;
     color: rgba(255, 255, 255, 0.5);
     cursor: pointer;
     transition: all .2s ease;
-}
-
-.sidebar-notes-header:nth-child(2) {
-    margin-top: .5em;
 }
 
 .sidebar-add-new-text:nth-child(1) {
@@ -377,11 +374,16 @@ body {
     color: #fff;
 }
 
-.sidebar-notes-header {
+.sidebar-notes-header,
+.sidebar-other-notes-header {
     background-color: #2B876F;
     color: #fff;
     font-size: 1.05em;
     cursor: default;
+}
+
+.sidebar-other-notes-header {
+    margin-top: .5em;
 }
 
 .sidebar-categories-header {
@@ -506,7 +508,7 @@ body {
     justify-content: space-around;
     align-items: center;
     font-size: .8em;
-    margin: 5px 30px 15px;
+    margin: .8em 30px 15px;
     padding: 1em;
     cursor: pointer;
     transition: all .2s ease;
