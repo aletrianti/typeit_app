@@ -9,11 +9,11 @@ const sessionSecret = require("./config/config").sessionSecret;
 const User = require("./models/User");
 
 // View engine setup
-app.set('views', path.join(__dirname, 'client/views'));
+app.set('views', path.join(__dirname, '/client/views'));
 // Set ejs as the template engine, so that each page can be rendered correctly
 app.set('view engine', 'ejs');
 // Set the "client" folder as the static folder
-app.use(express.static('client'));
+app.use(express.static(__dirname + '/client'));
 
 // This is used to parse request bodies
 app.use(express.urlencoded({ extended: true }));
