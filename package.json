@@ -4,8 +4,7 @@
   "description": "A web application for writing notes.",
   "main": "app.js",
   "scripts": {
-    "server": "nodemon app.js",
-    "client": "npm start --prefix client"
+    "server": "nodemon app.js"
   },
   "repository": {
     "type": "git",
