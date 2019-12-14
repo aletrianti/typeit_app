@@ -32,7 +32,6 @@ const UserSchema = new mongoose.Schema({
 });
 
 // Makes it easier to authenticate users by adding methods with a plugin
-// ... [TODO: Write more about this]
 UserSchema.plugin(passportMongoose);
 
 // Export the schema so that it can be accessible through the User variable as a JavaScript model ('user')

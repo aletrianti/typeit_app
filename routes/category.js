@@ -87,7 +87,7 @@ router.get('/:id', isLoggedIn, async (req, res) => {
 
 // POST request
 // Edit a specific category
-router.post('/:id/edit', isLoggedIn, async (req, res) => {
+router.post('/edit/:id', isLoggedIn, async (req, res) => {
     // Validate the body of the request and, if there are errors, send the error message
     const validation = categoryValidation.validate(req.body);
     if (validation.error) {
@@ -117,6 +117,7 @@ router.post('/:id/edit', isLoggedIn, async (req, res) => {
         });
 
         // Change the category's name inside notes, if used
+        // If the category was used inside one or more notes, change the name of the category in there, too.
         const noteCategory = await Note.find({ 'author.id': req.user._id, 'category.id': req.params.id })
             .then((notes) => { return notes; })
             .catch((err) => { if (err) throw err; });
@@ -144,7 +145,9 @@ router.post('/:id/edit', isLoggedIn, async (req, res) => {
 
 // POST request
 // Delete a category
-router.post('/:id/delete', isLoggedIn, async (req, res) => {
+router.post('/delete/:id', isLoggedIn, async (req, res) => {
+    // Check if the category about to be deleted is being used in a note.
+    // If it is, send an error message. If it is not, delete it.
     const noteCategory = await Note.find({ 'author.id': req.user._id, 'category.id': req.params.id })
         .then((note) => { return note; })
         .catch((err) => { if (err) throw err; });

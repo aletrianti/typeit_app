@@ -4,7 +4,7 @@
         <a href="/dashboard/categories/<%= category._id %>">
             <button><i class="far fa-edit"></i></button>
         </a>
-        <form action="/dashboard/categories/<%= category._id %>/delete?_method=delete" method="post">
+        <form action="/dashboard/categories/delete/<%= category._id %>?_method=delete" method="post">
             <button><i class="fas fa-trash-alt"></i></button>
         </form>
     </div>

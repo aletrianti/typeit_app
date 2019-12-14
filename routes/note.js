@@ -163,7 +163,7 @@ router.post('/edit/:id', isLoggedIn, async (req, res) => {
 
 // POST request
 // Delete a specific note
-router.post('/delete/:id', isLoggedIn, async (req, res) => {
+router.post('/delete/:id', isLoggedIn, (req, res) => {
     try {
         Note.findByIdAndRemove({ _id: req.params.id }, (err) => {
             if (err) { console.log(err); }
