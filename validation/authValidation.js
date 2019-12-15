@@ -24,7 +24,9 @@ const categoryValidation = Joi.object({
     name: Joi.string().required().label('Name')
 });
 
-module.exports.registerValidation = registerValidation;
-module.exports.loginValidation = loginValidation;
-module.exports.noteValidation = noteValidation;
-module.exports.categoryValidation = categoryValidation;
+module.exports = {
+    registerValidation: registerValidation,
+    loginValidation: loginValidation,
+    noteValidation: noteValidation,
+    categoryValidation: categoryValidation
+};

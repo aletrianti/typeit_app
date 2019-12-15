@@ -5,7 +5,6 @@ const User = require('../models/User');
 module.exports = function(passport) {
     // Initialize local strategy for sessions, serialize and deserialize users:
     // All this is possible thanks to methods that come from the passport-local-mongoose package
-
     passport.use(
         new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
             // Check if the user exists
